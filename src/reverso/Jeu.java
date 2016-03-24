@@ -15,5 +15,7 @@ public class Jeu {
     
     public void start(){
         drawJeu();
+        plateau.chercherCase(tourBlanc);
+        drawJeu();
     }
 }

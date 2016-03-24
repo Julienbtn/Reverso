@@ -8,6 +8,10 @@ public class Pion {
         this.blanc = blanc;
     }
     
+    public boolean isBlanc(){
+        return blanc;
+    }
+    
     public void draw(){
         if (blanc)
             System.out.print("O");

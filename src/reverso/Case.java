@@ -22,10 +22,34 @@ public class Case{
         return jouable;
     }
     
+    public boolean isVide(){
+        if(contenu ==null)
+            return true;
+        else
+            return false;
+    }
+    
+    public boolean isBlanc(){
+        return (!isVide() && contenu.isBlanc());
+    }
+    
+    public boolean isNoir(){
+        return (!isVide() && !contenu.isBlanc());
+    }
+    
+    public boolean isBool(boolean joueur){
+        if(joueur)
+            return isBlanc();
+        else
+            return isNoir();
+    }
+    
     public void drawCase(int x, int y){
         if(y == 0)
             System.out.println();
-        if (contenu != null)
+        if (jouable)
+            System.out.print("?");
+        else if (contenu != null)
             contenu.draw();
         else 
             System.out.print("-");
