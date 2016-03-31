@@ -28,7 +28,7 @@ public class Case{
         else
             return false;
     }
-    
+        
     public boolean isBlanc(){
         return (!isVide() && contenu.isBlanc());
     }
@@ -56,6 +56,19 @@ public class Case{
     
     public void jouer(boolean blanc){
         contenu = new Pion(blanc);
+    }
+    
+    
+    // Implémentation interface IA !
+    
+    public boolean remplie(){
+        return !isVide();
+    }
+    public boolean blanche(){
+        return isBlanc();
+    }
+    public boolean jouable(){
+        return isJouable();
     }
 }
 	

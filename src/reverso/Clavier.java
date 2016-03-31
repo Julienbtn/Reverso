@@ -14,7 +14,11 @@ public class Clavier implements Entree {
         int[] choix;
         boolean boucle = true;
         do{
-            System.out.println("Où jouer? (exemple : B2)");
+            if(j.isTourBlanc())
+                System.out.print("O : ");
+            else
+                System.out.print("X : ");
+            System.out.println("où jouer? (exemple : B2)");
             c = in.nextLine();
             choix = lireChoix(c);
             if (choix[0] != -1){
@@ -24,7 +28,6 @@ public class Clavier implements Entree {
         return choix;
     }
     
-    // colonne puis ligne
     public int[] lireChoix(String c){
         int[] val = new int[2];
         if (c.length()==2){

@@ -43,12 +43,12 @@ public class TableauCase{
         System.out.println("  A B C D E F G H");
         for (int x =0; x<dimX;x++){
             System.out.print(x+1 +" ");
-            for (int y =0; y<dimX;y++){
+            for (int y =0; y<dimX;y++)
                 getCase(x,y).drawCase(x, y);
-            }
             System.out.println();
         }
         System.out.println();
+        
     }
     
     public boolean chercherCase(boolean joueur){
@@ -280,13 +280,24 @@ public class TableauCase{
     }
     
     public boolean caseJouable(){
-        for (int x =0; x<dimX;x++){
-            for (int y =0; y<dimX;y++){
+        for (int x =0; x<dimX;x++)
+            for (int y =0; y<dimX;y++)
                 if(getCase(x,y).isJouable())
                     return true;
-            }
-        }
         return false;
+    }
+    
+    public int comptePoints(boolean joueur){
+        int c = 0;
+        for (int x =0; x<dimX;x++)
+            for (int y =0; y<dimX;y++)
+                if(getCase(x,y).isBool(joueur))
+                    c++;
+        return c;
+    }
+    
+    public Case[] getTab(){
+        return tab;
     }
 }
 
