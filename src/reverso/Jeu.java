@@ -76,8 +76,8 @@ public class Jeu {
     }
     public void jouer(int idCase){
         int[] choix = new int[2];
-        choix[0] = idCase%8;
-        choix[1] = (idCase - choix[0])/8;
+        choix[1] = idCase%8;
+        choix[0] = (idCase - choix[1])/8;
         jouer(choix);
     }
     public boolean tourBlanc(){
