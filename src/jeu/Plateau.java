@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public interface Plateau {
     
-    public ArrayList<Case> getDamier();     // Tableau contenant les cases du tableau (ligne par ligne)
+    public Case[] getDamier();              // Tableau contenant les cases du tableau (ligne par ligne)
     public void jouer(int idCase);          // Tente de jouer à la case indiquée
                                             // Lance une exception si impossible
     
