@@ -3,14 +3,14 @@ package reverso;
 public class Jeu {
     private TableauCase plateau;
     private boolean tourBlanc;
+    
+    // Implémentation interface IA !
     private boolean passe;
     private boolean fini;
 
     public Jeu(){
         plateau = new TableauCase(8,8,this);
         tourBlanc = false;
-        
-        // Implémentation interface IA !
         passe = false;
         fini = false;
     }
