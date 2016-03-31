@@ -9,6 +9,8 @@ public class Jeu {
     public Jeu(){
         plateau = new TableauCase(8,8,this);
         tourBlanc = false;
+        
+        // Implémentation interface IA !
         passe = false;
         fini = false;
     }
