@@ -278,5 +278,15 @@ public class TableauCase{
         }
         getCase(choix[0],choix[1]).jouer(joueur);
     }
+    
+    public boolean caseJouable(){
+        for (int x =0; x<dimX;x++){
+            for (int y =0; y<dimX;y++){
+                if(getCase(x,y).isJouable())
+                    return true;
+            }
+        }
+        return false;
+    }
 }
 
