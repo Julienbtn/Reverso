@@ -28,7 +28,7 @@ public class Case{
         else
             return false;
     }
-    
+        
     public boolean isBlanc(){
         return (!isVide() && contenu.isBlanc());
     }
@@ -45,8 +45,6 @@ public class Case{
     }
     
     public void drawCase(int x, int y){
-        if(y == 0)
-            System.out.println();
         if (jouable)
             System.out.print("?");
         else if (contenu != null)
@@ -54,6 +52,23 @@ public class Case{
         else 
             System.out.print("-");
         System.out.print(" ");
+    }
+    
+    public void jouer(boolean blanc){
+        contenu = new Pion(blanc);
+    }
+    
+    
+    // Implémentation interface IA !
+    
+    public boolean remplie(){
+        return !isVide();
+    }
+    public boolean blanche(){
+        return isBlanc();
+    }
+    public boolean jouable(){
+        return isJouable();
     }
 }
 	
