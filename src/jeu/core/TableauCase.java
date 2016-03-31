@@ -1,25 +1,28 @@
-package reverso;
+package jeu.core;
+
+import jeu.core.Jeu;
+import jeu.core.CaseR;
 
 
 public class TableauCase{
     private Jeu jeu;
     private int dimX;
     private int dimY;
-    private Case[] tab;
+    private CaseR[] tab;
     
     public TableauCase(int dimY, int dimX,Jeu jeu) {
         this.dimX = dimX;
         this.dimY = dimY;
         this.jeu = jeu;
-        this.tab = new Case[dimX * dimY];
-        Case case1;
+        this.tab = new CaseR[dimX * dimY];
+        CaseR case1;
         for(int i = 0; i<dimX*dimY;i++){
             if (i==27 ||i==36)
-                case1 = new Case(true);
+                case1 = new CaseR(true);
             else if (i==28 ||i==35)
-                case1 = new Case(false);
+                case1 = new CaseR(false);
             else
-                case1 = new Case();
+                case1 = new CaseR();
             tab[i] = case1;
         }
     }
@@ -31,11 +34,11 @@ public class TableauCase{
         return dimX;
     }
 
-    public Case getCase(int x, int y){
+    public CaseR getCase(int x, int y){
         return tab[y*this.dimX + x];
     }
     
-    public Case getCase(int[] choix){
+    public CaseR getCase(int[] choix){
         return tab[choix[1]*this.dimX + choix[0]];
     }
     
@@ -296,7 +299,7 @@ public class TableauCase{
         return c;
     }
     
-    public Case[] getTab(){
+    public CaseR[] getTab(){
         return tab;
     }
 }

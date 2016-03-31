@@ -1,5 +1,6 @@
 package reverso;
 
+import jeu.core.Jeu;
 import java.util.Scanner;
 
 public class Clavier implements Entree {

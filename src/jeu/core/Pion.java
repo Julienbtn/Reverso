@@ -1,4 +1,4 @@
-package reverso;
+package jeu.core;
 
 
 public class Pion {
