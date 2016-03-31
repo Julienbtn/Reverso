@@ -13,9 +13,20 @@ public class Jeu {
         plateau.drawPlateau();
     }
     
-    public void start(){
-        drawJeu();
+    public void start(Clavier c){
+        do {
         plateau.chercherCase(tourBlanc);
         drawJeu();
+        jouer(c.choix(this));
+        tourBlanc = !tourBlanc;
+        } while (true);
+    }
+    
+    public TableauCase getPlateau(){
+        return plateau;
+    }
+    
+    public void jouer(int[] choix){
+        plateau.jouer(choix, tourBlanc);
     }
 }

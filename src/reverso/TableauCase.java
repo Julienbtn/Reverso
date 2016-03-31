@@ -35,11 +35,18 @@ public class TableauCase{
         return tab[y*this.dimX + x];
     }
     
+    public Case getCase(int[] choix){
+        return tab[choix[1]*this.dimX + choix[0]];
+    }
+    
     public void drawPlateau(){
+        System.out.println("  A B C D E F G H");
         for (int x =0; x<dimX;x++){
+            System.out.print(x+1 +" ");
             for (int y =0; y<dimX;y++){
                 getCase(x,y).drawCase(x, y);
             }
+            System.out.println();
         }
         System.out.println();
     }
@@ -140,6 +147,136 @@ public class TableauCase{
                 return true;
         }
         return false;
+    }
+    
+    public void jouer(int[] choix, boolean joueur){
+        int cx = choix[0]-1;
+        int cy = choix[1]-1;
+        if(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+            while(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+                cx--;
+                cy--;
+            }
+            if(nonVide(cx, cy)&&getCase(cx,cy).isBool(joueur)){
+                cx = choix[0]-1;
+                cy = choix[1]-1;
+                do{
+                    getCase(cx,cy).jouer(joueur);
+                    cx--;
+                    cy--;
+                } while(getCase(cx,cy).isBool(!joueur));
+            }
+        }
+        cx=choix[0];
+        cy=choix[1]-1;
+        if(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+            while(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+                cy--;
+            }
+            if(nonVide(cx, cy)&&getCase(cx,cy).isBool(joueur)){
+                cx = choix[0];
+                cy = choix[1]-1;
+                do{
+                    getCase(cx,cy).jouer(joueur);
+                    cy--;
+                } while(getCase(cx,cy).isBool(!joueur));
+            }
+        }
+        cx=choix[0]+1;
+        cy=choix[1]-1;
+        if(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+            while(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+                cx++;
+                cy--;
+            }
+            if(nonVide(cx, cy)&&getCase(cx,cy).isBool(joueur)){
+                cx = choix[0]+1;
+                cy = choix[1]-1;
+                do{
+                    getCase(cx,cy).jouer(joueur);
+                    cx++;
+                    cy--;
+                } while(getCase(cx,cy).isBool(!joueur));
+            }
+        }
+        cx=choix[0]-1;
+        cy=choix[1];
+        if(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+            while(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+                cx--;
+            }
+            if(nonVide(cx, cy)&&getCase(cx,cy).isBool(joueur)){
+                cx = choix[0]-1;
+                do{
+                    getCase(cx,cy).jouer(joueur);
+                    cx--;
+                } while(getCase(cx,cy).isBool(!joueur));
+            }
+        }
+        cx=choix[0]+1;
+        cy=choix[1];
+        if(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+            while(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+                cx++;
+            }
+            if(nonVide(cx, cy)&&getCase(cx,cy).isBool(joueur)){
+                cx = choix[0]+1;
+                do{
+                    getCase(cx,cy).jouer(joueur);
+                    cx++;
+                } while(getCase(cx,cy).isBool(!joueur));
+            }
+        }
+        cx=choix[0]-1;
+        cy=choix[1]+1;
+        if(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+            while(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+                cx--;
+                cy++;
+            }
+            if(nonVide(cx, cy)&&getCase(cx,cy).isBool(joueur)){
+                cx = choix[0]-1;
+                cy = choix[1]+1;
+                do{
+                    getCase(cx,cy).jouer(joueur);
+                    cx--;
+                    cy++;
+                } while(getCase(cx,cy).isBool(!joueur));
+            }
+        }
+        cx=choix[0];
+        cy=choix[1]+1;
+        if(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+            while(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+                cy++;
+            }
+            if(nonVide(cx, cy)&&getCase(cx,cy).isBool(joueur)){
+                cx = choix[0];
+                cy = choix[1]+1;
+                do{
+                    getCase(cx,cy).jouer(joueur);
+                    cy++;
+                } while(getCase(cx,cy).isBool(!joueur));
+            }
+        }
+        cx=choix[0]+1;
+        cy=choix[1]+1;
+        if(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+            while(nonVide(cx,cy)&&getCase(cx,cy).isBool(!joueur)){
+                cx++;
+                cy++;
+            }
+            if(nonVide(cx, cy)&&getCase(cx,cy).isBool(joueur)){
+                cx = choix[0]+1;
+                cy = choix[1]+1;
+                do{
+                    getCase(cx,cy).jouer(joueur);
+                    cx++;
+                    cy++;
+                } while(getCase(cx,cy).isBool(!joueur));
+            }
+        }
+        getCase(choix[0],choix[1]).jouer(joueur);
     }
 }
 
