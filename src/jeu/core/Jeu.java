@@ -75,8 +75,6 @@ public class Jeu implements Plateau{
                 } catch (NoFreeCaseException ex) {
                     Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                tourBlanc = !tourBlanc;
-                passe = false;
             }
             else {
                 plateau.chercherCase(!tourBlanc);
@@ -106,6 +104,8 @@ public class Jeu implements Plateau{
     
     public void jouer(int[] choix){
         plateau.jouer(choix, tourBlanc);
+        tourBlanc = !tourBlanc;
+        passe = false;
     }
     
     public boolean caseJouable(){

@@ -22,9 +22,12 @@ public abstract class IntelligenceBase{
     }
     
     protected ArrayList<Integer> casesJouables() throws NoFreeCaseException{
-        ArrayList<Integer> res = new ArrayList<>();
+        return casesJouables(plateau);
+    }
+    
+    protected ArrayList<Integer> casesJouables(Plateau p) throws NoFreeCaseException{
         
-        Case[] damier = plateau.getDamier();
+        Case[] damier = p.getDamier();
         ArrayList<Integer> jouables = new ArrayList<>();
         
         for (int i=0; i<64; i++){
