@@ -20,6 +20,7 @@ public class Jeu implements Plateau{
         tourBlanc = false;
         passe = false;
         fini = false;
+        plateau.chercherCase(tourBlanc);
     }
     
     public Jeu(boolean tourBlanc, boolean passe, boolean fini){

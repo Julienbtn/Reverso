@@ -23,6 +23,7 @@ public class TableauCase{
                 case1 = new CaseR();
             tab[i] = case1;
         }
+        
     }
     
     public int getDimY() {
