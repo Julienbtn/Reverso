@@ -5,15 +5,14 @@ import jeu.core.CaseR;
 
 
 public class TableauCase{
-    private Jeu jeu;
     private int dimX;
     private int dimY;
     private CaseR[] tab;
     
-    public TableauCase(int dimY, int dimX,Jeu jeu) {
+    public TableauCase(int dimY, int dimX) {
         this.dimX = dimX;
         this.dimY = dimY;
-        this.jeu = jeu;
+        //this.jeu = jeu;
         this.tab = new CaseR[dimX * dimY];
         CaseR case1;
         for(int i = 0; i<dimX*dimY;i++){
@@ -40,6 +39,9 @@ public class TableauCase{
     
     public CaseR getCase(int[] choix){
         return tab[choix[1]*this.dimX + choix[0]];
+    }
+    public void setTab(CaseR[] tab){
+        this.tab = tab;
     }
     
     public void drawPlateau(){
@@ -305,6 +307,13 @@ public class TableauCase{
         for(int i=0; i<dimX*dimY;i++){
             copie[i]=tab[i].copieCase();
         }
+        return copie;
+    }
+    
+    public TableauCase copieTout(){
+        TableauCase copie;
+        copie = new TableauCase(dimY, dimX);
+        copie.setTab(copieTab());
         return copie;
     }
     

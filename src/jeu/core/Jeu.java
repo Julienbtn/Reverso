@@ -13,10 +13,17 @@ public class Jeu implements Plateau{
     private boolean fini;
 
     public Jeu(){
-        plateau = new TableauCase(8,8,this);
+        plateau = new TableauCase(8,8);
         tourBlanc = false;
         passe = false;
         fini = false;
+    }
+    
+    public Jeu(boolean tourBlanc, boolean passe, boolean fini){
+        plateau = new TableauCase(8,8);
+        this.tourBlanc = tourBlanc;
+        this.passe = passe;
+        this.fini = fini;
     }
     
     public void drawJeu(){
@@ -76,7 +83,12 @@ public class Jeu implements Plateau{
     
     
     // Implémentation interface IA !
-    
+    public Jeu copieJeu(){
+        Jeu copie;
+        copie = new Jeu(tourBlanc, passe, fini);
+        copie.plateau = plateau.copieTout();
+        return copie;
+    }
     public CaseR[] getDamier(){
         return plateau.copieTab();
     }
