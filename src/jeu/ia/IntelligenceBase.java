@@ -27,10 +27,8 @@ public abstract class IntelligenceBase{
         Case[] damier = plateau.getDamier();
         ArrayList<Integer> jouables = new ArrayList<>();
         
-        Case place;
         for (int i=0; i<64; i++){
-            place = damier[i];
-            if (place.jouable())
+            if (damier[i].jouable())
                 jouables.add(i);
             
         }
