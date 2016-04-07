@@ -299,8 +299,14 @@ public class TableauCase{
         return c;
     }
     
-    public CaseR[] getTab(){
-        return tab;
+    public CaseR[] copieTab(){
+        CaseR[] copie;
+        copie = new CaseR[dimX * dimY];
+        for(int i=0; i<dimX*dimY;i++){
+            copie[i]=tab[i].copieCase();
+        }
+        return copie;
     }
+    
 }
 

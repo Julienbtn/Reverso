@@ -60,6 +60,16 @@ public class CaseR implements Case{
         contenu = new Pion(blanc);
     }
     
+    public CaseR copieCase(){
+        CaseR copie;
+        if(contenu == null)
+            copie = new CaseR();
+        else
+            copie = new CaseR(contenu.isBlanc());
+        copie.setJouable(jouable);
+        return copie;
+    }
+    
     
     // Implémentation interface IA !
     

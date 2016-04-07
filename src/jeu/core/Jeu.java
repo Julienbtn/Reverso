@@ -78,7 +78,7 @@ public class Jeu implements Plateau{
     // Implémentation interface IA !
     
     public CaseR[] getDamier(){
-        return plateau.getTab();
+        return plateau.copieTab();
     }
     public void jouer(int idCase){
         if (idCase<0 ||idCase>=64)
