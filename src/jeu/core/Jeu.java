@@ -119,7 +119,7 @@ public class Jeu implements Plateau{
     
     
     // Implémentation interface IA !
-    public Jeu copieJeu(){
+    public Jeu copie(){
         Jeu copie;
         copie = new Jeu(tourBlanc, passe, fini);
         copie.plateau = plateau.copieTout();
