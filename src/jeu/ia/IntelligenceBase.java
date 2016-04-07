@@ -22,15 +22,16 @@ public abstract class IntelligenceBase{
     }
     
     protected ArrayList<Integer> casesJouables() throws NoFreeCaseException{
-        ArrayList<Integer> res = new ArrayList<>();
+        return casesJouables(plateau);
+    }
+    
+    protected ArrayList<Integer> casesJouables(Plateau p) throws NoFreeCaseException{
         
-        Case[] damier = plateau.getDamier();
+        Case[] damier = p.getDamier();
         ArrayList<Integer> jouables = new ArrayList<>();
         
-        Case place;
         for (int i=0; i<64; i++){
-            place = damier[i];
-            if (place.jouable())
+            if (damier[i].jouable())
                 jouables.add(i);
             
         }
@@ -40,6 +41,13 @@ public abstract class IntelligenceBase{
         return jouables;
     }
     
+    
+    protected Plateau simuler(Plateau source, int coup){
+        Plateau res = source.copie();
+        res.jouer(coup);
+        
+        return res;
+    }
     
     public abstract int mouvement() throws NoFreeCaseException;
     
