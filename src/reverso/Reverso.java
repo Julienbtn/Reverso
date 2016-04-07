@@ -2,7 +2,7 @@ package reverso;
 
 import ihm.Fenetre;
 import jeu.core.Jeu;
-import jeu.ia.IntelligenceHasard;
+import jeu.ia.*;
 
 
 public class Reverso {
@@ -14,7 +14,8 @@ public class Reverso {
         // Jeu en mode console qui fonctionne
         Jeu j = new Jeu();
         Clavier c = new Clavier();
-        IntelligenceHasard ia = new IntelligenceHasard(j);
-        j.start(c,ia);
+        IntelligenceHasard ia1 = new IntelligenceHasard(j);
+        IntelligenceNormale ia2 = new IntelligenceNormale(j);
+        j.start(c,ia2);
     }
 }

@@ -12,7 +12,6 @@ public class TableauCase{
     public TableauCase(int dimY, int dimX) {
         this.dimX = dimX;
         this.dimY = dimY;
-        //this.jeu = jeu;
         this.tab = new CaseR[dimX * dimY];
         CaseR case1;
         for(int i = 0; i<dimX*dimY;i++){
