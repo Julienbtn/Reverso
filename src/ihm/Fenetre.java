@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import javax.swing.*;
+import jeu.Case;
+
  
 public class Fenetre extends JFrame {
   private JButton bouton = new JButton("Recommencer");
@@ -18,7 +20,7 @@ public class Fenetre extends JFrame {
   private JLabel tour = new JLabel("");
   
   
-  public Fenetre(){
+  public Fenetre( Case[] damier){
     this.setTitle("Reverso"); //titre
     this.setSize(500, 500); // taille de la fenetre (500x500)
     this.setLocationRelativeTo(null); // centré 
@@ -39,14 +41,13 @@ public class Fenetre extends JFrame {
     this.getContentPane().add(container_centre,BorderLayout.CENTER);
     GridLayout grille = new GridLayout(8,8);
     container_centre.setLayout(grille);
-    
-    for (int i=1;i<=8;i++)
+    for (int i = 0 ; i<64;i++)
     {
-        for (int j=1;j<=8;j++)
-        {
-            container_centre.add(new JButton("1"));
-        }
+        container_centre.add(new CaseG(damier[i]));
     }
+    
+    
+    container_centre.repaint();
 
     
     //Bas de la fenêtre

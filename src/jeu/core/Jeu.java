@@ -17,6 +17,7 @@ public class Jeu implements Plateau{
         tourBlanc = false;
         passe = false;
         fini = false;
+        plateau.chercherCase(tourBlanc);
     }
     
     public void drawJeu(){
