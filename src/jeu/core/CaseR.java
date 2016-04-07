@@ -1,15 +1,17 @@
-package reverso;
+package jeu.core;
 
-public class Case{
+import jeu.Case;
+
+public class CaseR implements Case{
     private boolean jouable;
     private Pion contenu;
     
-    public Case(){
+    public CaseR(){
         jouable = false;
         contenu = null;
     }
     
-    public Case(boolean blanc){
+    public CaseR(boolean blanc){
         jouable = false;
         contenu = new Pion(blanc);
     }

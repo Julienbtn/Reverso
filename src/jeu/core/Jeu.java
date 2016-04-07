@@ -1,6 +1,10 @@
-package reverso;
+package jeu.core;
 
-public class Jeu {
+import jeu.core.CaseR;
+import jeu.Plateau;
+import reverso.Clavier;
+
+public class Jeu implements Plateau{
     private TableauCase plateau;
     private boolean tourBlanc;
     
@@ -73,10 +77,12 @@ public class Jeu {
     
     // Implémentation interface IA !
     
-    public Case[] getDamier(){
+    public CaseR[] getDamier(){
         return plateau.getTab();
     }
     public void jouer(int idCase){
+        if (idCase<0 ||idCase>=64)
+            throw new IndexOutOfBoundsException();
         int[] choix = new int[2];
         choix[1] = idCase%8;
         choix[0] = (idCase - choix[1])/8;

@@ -5,6 +5,8 @@
  */
 package jeu.ia;
 
+import java.util.ArrayList;
+import jeu.Case;
 import jeu.Plateau;
 
 /**
@@ -18,6 +20,26 @@ public abstract class IntelligenceBase{
     public IntelligenceBase(Plateau plate){
         plateau = plate;
     }
+    
+    protected ArrayList<Integer> casesJouables() throws NoFreeCaseException{
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        Case[] damier = plateau.getDamier();
+        ArrayList<Integer> jouables = new ArrayList<>();
+        
+        Case place;
+        for (int i=0; i<64; i++){
+            place = damier[i];
+            if (place.jouable())
+                jouables.add(i);
+            
+        }
+        
+        if (jouables.size()<1)
+            throw new NoFreeCaseException();
+        return jouables;
+    }
+    
     
     public abstract int mouvement() throws NoFreeCaseException;
     
