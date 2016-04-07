@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public interface Plateau {
     
+    public Plateau copie();                 // Renvoie copie du plateau
 
     public Case[] getDamier();              // Tableau contenant les cases du tableau (ligne par ligne)
     public void jouer(int idCase);          // Tente de jouer à la case indiquée
