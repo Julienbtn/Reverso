@@ -39,6 +39,13 @@ public abstract class IntelligenceBase{
     }
     
     
+    protected Plateau simuler(Plateau source, int coup){
+        Plateau res = source.copie();
+        res.jouer(coup);
+        
+        return res;
+    }
+    
     public abstract int mouvement() throws NoFreeCaseException;
     
     
