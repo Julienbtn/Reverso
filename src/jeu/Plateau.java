@@ -6,6 +6,7 @@
 package jeu;
 
 import java.util.ArrayList;
+import jeu.core.TableauCase;
 
 /**
  *
@@ -28,5 +29,4 @@ public interface Plateau {
     
     public boolean victoireBlanc();         // Renvoie true si le joueur blanc a gagné
     public boolean termine();               // Renvoie true si jeu terminé
-    
 }

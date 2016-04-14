@@ -11,15 +11,15 @@ public class Reverso {
         // lancer de la fenetre
 
         Jeu j = new Jeu();
-        Fenetre fen = new Fenetre(j.getDamier());
+        Fenetre fen = new Fenetre(j);
 
 
         // Jeu en mode console qui fonctionne
-        Clavier c = new Clavier();
-        IntelligenceHasard ia1 = new IntelligenceHasard(j);
-        IntelligenceNormale ia2 = new IntelligenceNormale(j);
+        //Clavier c = new Clavier();
+        //IntelligenceHasard ia1 = new IntelligenceHasard(j);
+        //IntelligenceNormale ia2 = new IntelligenceNormale(j);
         
-        j.start(c,ia2);
+        //j.start(c,ia2);
 
     }
 }

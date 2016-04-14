@@ -3,11 +3,15 @@ package ihm;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 import jeu.Case;
+import jeu.Plateau;
 
  
-public class Fenetre extends JFrame {
+public class Fenetre extends JFrame implements ActionListener {
   private JButton bouton = new JButton("Recommencer");
   private JPanel container_nord = new JPanel();
   private JLabel parties_j1 = new JLabel("0");
@@ -20,7 +24,8 @@ public class Fenetre extends JFrame {
   private JLabel tour = new JLabel("");
   
   
-  public Fenetre( Case[] damier){
+  public Fenetre(Plateau plateau){
+    Case[] damier = plateau.getDamier();
     this.setTitle("Reverso"); //titre
     this.setSize(500, 500); // taille de la fenetre (500x500)
     this.setLocationRelativeTo(null); // centré 
@@ -43,10 +48,12 @@ public class Fenetre extends JFrame {
     container_centre.setLayout(grille);
     for (int i = 0 ; i<64;i++)
     {
-        container_centre.add(new CaseG(damier[i]));
+        CaseG caseA = new CaseG(damier[i]);
+        caseA.addMouseListener(new ListenerCase(damier[i],plateau,i,this));
+        container_centre.add(caseA);
+ 
+        
     }
-    
-    
     container_centre.repaint();
 
     
@@ -59,6 +66,29 @@ public class Fenetre extends JFrame {
     container_sud.add(tour);
     container_sud.add(new JLabel("Joueur 2"));
     container_sud.add(scorej2);
+    
+    
     this.setVisible(true); // rend visible la fenêtre
 }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void actualise(Plateau plateau){
+        container_centre.removeAll();
+        this.getContentPane().add(container_centre,BorderLayout.CENTER);
+        GridLayout grille = new GridLayout(8,8);
+        container_centre.setLayout(grille);
+        for (int i = 0 ; i<64;i++)
+        {
+            CaseG caseA = new CaseG(plateau.getDamier()[i]);
+            caseA.addMouseListener(new ListenerCase(plateau.getDamier()[i],plateau,i,this));
+            container_centre.add(caseA);
+        }
+        container_centre.repaint();
+        revalidate();
+    }
+    
 }

@@ -136,6 +136,7 @@ public class Jeu implements Plateau{
         choix[0] = idCase%8;
         choix[1] = (idCase - choix[0])/8;
         jouer(choix);
+        plateau.chercherCase(tourBlanc);
     }
     public boolean tourBlanc(){
         return tourBlanc;
