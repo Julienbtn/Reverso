@@ -1,10 +1,13 @@
 package jeu.ia;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jeu.Case;
 import jeu.Plateau;
+import jeu.core.Jeu;
 
-public abstract class IntelligenceBase{
+public abstract class IntelligenceBase implements reverso.Entree{
     
     protected Plateau plateau;
     
@@ -41,6 +44,18 @@ public abstract class IntelligenceBase{
     }
     
     public abstract int mouvement() throws NoFreeCaseException;
+    
+    public int[] choix(Jeu j){
+        int[] val = new int[2];
+        try {
+            int temp = mouvement();
+            val[0] = temp%8;
+            val[1] = (temp - val[0])/8;
+        } catch (NoFreeCaseException ex) {
+            Logger.getLogger(IntelligenceBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return val;
+    }
     
     
 }
