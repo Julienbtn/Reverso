@@ -64,5 +64,9 @@ public class Clavier implements Entree {
         return choix;
     }
     
+    public void pause(){
+        System.out.println("Appuyer sur Entrée pour rejouer");
+        in.nextLine();
+    }
     
 }

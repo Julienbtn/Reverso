@@ -15,11 +15,18 @@ public class Reverso {
 
 
         // Jeu en mode console qui fonctionne
-        //Clavier c = new Clavier();
-        //IntelligenceHasard ia1 = new IntelligenceHasard(j);
-        //IntelligenceNormale ia2 = new IntelligenceNormale(j);
-        
-        //j.start(c,ia2);
+        Clavier c = new Clavier();
+        IntelligenceHasard ia1; 
+        IntelligenceNormale ia2; 
+        IntelligenceRecursive ia3;
+        while(true){
+            ia1= new IntelligenceHasard(j);
+            ia2= new IntelligenceNormale(j);
+            ia3 = new IntelligenceRecursive(j,1);
+            j.start(c,ia1);
+            c.pause();
+            j= new Jeu();
+        }
 
     }
 }

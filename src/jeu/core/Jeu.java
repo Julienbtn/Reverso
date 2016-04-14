@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import jeu.core.CaseR;
 import jeu.Plateau;
 import jeu.ia.*;
-import reverso.Clavier;
+import reverso.*;
 
 public class Jeu implements Plateau{
     private TableauCase plateau;
@@ -62,7 +62,7 @@ public class Jeu implements Plateau{
         fin();
     }
     
-    public void start(Clavier c, IntelligenceBase ia){
+    public void start(Entree c, Entree ia){
         boolean boucle = true;
         do {
             plateau.chercherCase(tourBlanc);
@@ -71,11 +71,7 @@ public class Jeu implements Plateau{
                 if(tourBlanc)
                     jouer(c.choix(this));
                 else
-                    try {
-                        jouer(ia.mouvement());
-                } catch (NoFreeCaseException ex) {
-                    Logger.getLogger(Jeu.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    jouer(ia.choix(this));
             }
             else {
                 plateau.chercherCase(!tourBlanc);
@@ -90,6 +86,8 @@ public class Jeu implements Plateau{
                 }
             }
         } while (boucle);
+        System.out.println("O : "+ c.getClass());
+        System.out.println("X : "+ ia.getClass());
         fin();
     }
     
