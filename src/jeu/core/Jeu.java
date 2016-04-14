@@ -1,11 +1,6 @@
 package jeu.core;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import jeu.core.CaseR;
 import jeu.Plateau;
-import jeu.ia.*;
-import reverso.*;
 
 public class Jeu implements Plateau{
     private TableauCase plateau;
@@ -30,73 +25,6 @@ public class Jeu implements Plateau{
         this.fini = fini;
     }
     
-    public void drawJeu(){
-        plateau.drawPlateau();
-        System.out.println("Vous avez "+plateau.comptePoints(tourBlanc)+" pions.");
-        System.out.println("L'adversaire en a "+plateau.comptePoints(!tourBlanc)+".");
-    }
-    
-    public void start(Clavier c){
-        boolean boucle = true;
-        do {
-            plateau.chercherCase(tourBlanc);
-            drawJeu();
-            if(caseJouable()){
-                jouer(c.choix(this));
-                tourBlanc = !tourBlanc;
-                passe = false;
-            }
-            else {
-                plateau.chercherCase(!tourBlanc);
-                if(!caseJouable()){
-                    boucle = false;
-                    fini = true;
-                }
-                else{
-                    System.out.println("Tu peux pas jouer, dommage");
-                    tourBlanc = !tourBlanc;
-                    passe = true;
-                }
-            }
-        } while (boucle);
-        fin();
-    }
-    
-    public void start(Entree c, Entree ia){
-        boolean boucle = true;
-        do {
-            plateau.chercherCase(tourBlanc);
-            drawJeu();
-            if(caseJouable()){
-                if(tourBlanc)
-                    jouer(c.choix(this));
-                else
-                    jouer(ia.choix(this));
-            }
-            else {
-                plateau.chercherCase(!tourBlanc);
-                if(!caseJouable()){
-                    boucle = false;
-                    fini = true;
-                }
-                else{
-                    System.out.println("Tu peux pas jouer, dommage");
-                    tourBlanc = !tourBlanc;
-                    passe = true;
-                }
-            }
-        } while (boucle);
-        System.out.println("O : "+ c.getClass());
-        System.out.println("X : "+ ia.getClass());
-        fin();
-    }
-    
-    public void fin(){
-        System.out.println("FINI\n");
-        System.out.println("O : "+plateau.comptePoints(true));
-        System.out.println("X : "+plateau.comptePoints(false));
-    }
-    
     public TableauCase getPlateau(){
         return plateau;
     }
@@ -110,12 +38,6 @@ public class Jeu implements Plateau{
     public boolean caseJouable(){
         return plateau.caseJouable();
     }
-    
-    public boolean isTourBlanc(){
-        return tourBlanc;
-    }
-    
-    
     
     // Implémentation interface IA !
     public Jeu copie(){
@@ -134,6 +56,17 @@ public class Jeu implements Plateau{
         choix[0] = idCase%8;
         choix[1] = (idCase - choix[0])/8;
         jouer(choix);
+        plateau.chercherCase(tourBlanc);
+        if(!caseJouable()){
+            plateau.chercherCase(!tourBlanc);
+            if(!caseJouable()){
+                fini = true;
+            }
+            else{
+                tourBlanc = !tourBlanc;
+                passe = true;
+            }
+        }
         plateau.chercherCase(tourBlanc);
     }
     public boolean tourBlanc(){

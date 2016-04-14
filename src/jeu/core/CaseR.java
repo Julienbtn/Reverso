@@ -46,16 +46,6 @@ public class CaseR implements Case{
             return isNoir();
     }
     
-    public void drawCase(int x, int y){
-        if (jouable)
-            System.out.print("?");
-        else if (contenu != null)
-            contenu.draw();
-        else 
-            System.out.print("-");
-        System.out.print(" ");
-    }
-    
     public void jouer(boolean blanc){
         contenu = new Pion(blanc);
     }

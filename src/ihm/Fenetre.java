@@ -1,72 +1,37 @@
 package ihm;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-import jeu.Case;
-import jeu.Plateau;
+import jeu.*;
 
  
 public class Fenetre extends JFrame implements ActionListener {
-  private JButton bouton = new JButton("Recommencer");
-  private JPanel container_nord = new JPanel();
-  private JLabel parties_j1 = new JLabel("0");
-  private JLabel parties_j2 = new JLabel("0");
-  private JPanel container_centre = new JPanel();
-  private GridLayout grille = new GridLayout(8,8);
-  private JPanel container_sud = new JPanel();
-  private JLabel scorej1 = new JLabel("0");
-  private JLabel scorej2 = new JLabel("0");
-  private JLabel tour = new JLabel("");
+  private JPanel container_nord;
+  private JPanel container_centre;
+  private JPanel container_sud;
   
   
   public Fenetre(Plateau plateau){
-    Case[] damier = plateau.getDamier();
     this.setTitle("Reverso"); //titre
     this.setSize(500, 500); // taille de la fenetre (500x500)
     this.setLocationRelativeTo(null); // centré 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //bouton croix activé (quitte le processus lorsqu'on appuye dessus            
     this.setResizable(true); // possibilité de modifier la taille de la fenêtre
     this.setAlwaysOnTop(true); // la fenêtre reste devant
+    container_nord = new JPanel();
+    container_centre = new JPanel();
+    container_sud = new JPanel();
     
     //Haut de la fenêtre
     this.getContentPane().add(container_nord,BorderLayout.NORTH);
-    container_nord.add(new JLabel("Scores totales des parties"));
-    container_nord.add(new JLabel("Joueur 1"));
-    container_nord.add(parties_j1);
-    container_nord.add(new JLabel("Joueur 2"));
-    container_nord.add(parties_j2);
+    JButton bouton = new JButton("Recommencer");
     container_nord.add(bouton);
     
-    //Milieu de la fenêtre
+    //Grille et scores
     this.getContentPane().add(container_centre,BorderLayout.CENTER);
-    GridLayout grille = new GridLayout(8,8);
-    container_centre.setLayout(grille);
-    for (int i = 0 ; i<64;i++)
-    {
-        CaseG caseA = new CaseG(damier[i]);
-        caseA.addMouseListener(new ListenerCase(damier[i],plateau,i,this));
-        container_centre.add(caseA);
- 
-        
-    }
-    container_centre.repaint();
-
-    
-    //Bas de la fenêtre
     this.getContentPane().add(container_sud,BorderLayout.SOUTH);
-    container_sud.add(new JLabel("Scores : "));
-    container_sud.add(new JLabel("Joueur 1"));
-    container_sud.add(scorej1);
-    container_sud.add(new JLabel("C'est au tour de"));
-    container_sud.add(tour);
-    container_sud.add(new JLabel("Joueur 2"));
-    container_sud.add(scorej2);
-    
+    actualise(plateau);
     
     this.setVisible(true); // rend visible la fenêtre
 }
@@ -78,7 +43,6 @@ public class Fenetre extends JFrame implements ActionListener {
     
     public void actualise(Plateau plateau){
         container_centre.removeAll();
-        this.getContentPane().add(container_centre,BorderLayout.CENTER);
         GridLayout grille = new GridLayout(8,8);
         container_centre.setLayout(grille);
         for (int i = 0 ; i<64;i++)
@@ -87,8 +51,18 @@ public class Fenetre extends JFrame implements ActionListener {
             caseA.addMouseListener(new ListenerCase(plateau.getDamier()[i],plateau,i,this));
             container_centre.add(caseA);
         }
-        container_centre.repaint();
+        
+        container_sud.removeAll();
+        container_sud.add(new JLabel("Blanc : "+plateau.scoreBlanc()));
+        container_sud.add(new JLabel("Noir : "+plateau.scoreNoir()));
+        if(plateau.termine())
+            container_sud.add(new JLabel("FINI"));
+        else
+            container_sud.add(new JLabel("Au tour de : "+(plateau.tourBlanc()? "blanc" : "noir")));
+        if(plateau.passe())
+            container_sud.add(new JLabel("Tour passé"));
         revalidate();
+        repaint();
     }
     
 }

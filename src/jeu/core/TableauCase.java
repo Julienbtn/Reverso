@@ -1,9 +1,5 @@
 package jeu.core;
 
-import jeu.core.Jeu;
-import jeu.core.CaseR;
-
-
 public class TableauCase{
     private int dimX;
     private int dimY;
@@ -42,18 +38,6 @@ public class TableauCase{
     }
     public void setTab(CaseR[] tab){
         this.tab = tab;
-    }
-    
-    public void drawPlateau(){
-        System.out.println("  A B C D E F G H");
-        for (int x =0; x<dimX;x++){
-            System.out.print(x+1 +" ");
-            for (int y =0; y<dimX;y++)
-                getCase(x,y).drawCase(x, y);
-            System.out.println();
-        }
-        System.out.println();
-        
     }
     
     public boolean chercherCase(boolean joueur){
