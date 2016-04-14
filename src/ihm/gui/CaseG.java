@@ -7,8 +7,6 @@ import jeu.Case;
 
 public class CaseG extends JPanel {
         
-    
-    private boolean selectionnee;
 
     public CaseG(Case c){
         setLayout(new GridLayout(1,0));
@@ -17,6 +15,7 @@ public class CaseG extends JPanel {
     }
     
     public void update(Case c){
+        initCouleur();
         removeAll();
         if (c.remplie())
         {
@@ -31,12 +30,10 @@ public class CaseG extends JPanel {
         }
         else if (c.jouable())
         {
-           add(creerPion(Couleur.ROUGE)); 
+            setBackground(Color.BLUE);
+            setForeground(Color.LIGHT_GRAY);
         }
     }
-    
-            
-
     
     public CaseG getCase(int i, int j){
         return (CaseG) getComponent(j+i*8);
@@ -45,31 +42,15 @@ public class CaseG extends JPanel {
     public CaseG getCase(int i){
         return (CaseG) getComponent(i);
     }
-    
-    public boolean isSelectionnee() {
-        return selectionnee;
-    }
-
-    public void setSelectionnee(boolean selectionnee) {
-        this.selectionnee = selectionnee;
-        if(selectionnee){
-            setBackground(Color.BLUE);
-            setForeground(Color.LIGHT_GRAY);
-        }
-        else {
-            initCouleur();
-        }
-    }
-    
+        
     private void initCouleur(){
-            setBackground(Color.WHITE);
-            setForeground(new Color(200, 200, 200));
+            setBackground(new Color(153, 51, 0));
+            setForeground(new Color(102, 51, 0));
             
     }
     
     private Pion creerPion(Couleur couleur){
         Pion pion = new Pion(couleur);
-       // pion.addMouseListener(new ListenerPion(pion, this));
         return pion;
     }
     

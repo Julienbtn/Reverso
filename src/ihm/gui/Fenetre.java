@@ -41,6 +41,22 @@ public class Fenetre extends JFrame implements ActionListener {
                 fenetre.recommencer();
             }});
         container_nord.add(bouton);
+        
+        //Bar de menu? :P
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Rejouer");
+        JMenuItem jvj = new JMenuItem("2 joueurs");
+        JMenuItem ia1 = new JMenuItem("IA lvl1");
+        menu.add(jvj);
+        menu.add(ia1);
+        menuBar.add(menu);
+        jvj.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e)
+                            {
+                                    recommencer();
+                            }
+                    });
+        this.setJMenuBar(menuBar);
 
 
 
@@ -84,21 +100,12 @@ public class Fenetre extends JFrame implements ActionListener {
         this.actualiser();
     }
 
-
-
-
     public void actualiser(){
-
-        // Damier (centre)
-
         damier = plateau.getDamier();
         Component[] cases = container_centre.getComponents();
-
         for (int i=0; i<64; i++){
             ((CaseG) cases[i]).update(damier[i]);
         }
-
-
         container_sud.removeAll();
         container_sud.add(new JLabel("Blanc : "+plateau.scoreBlanc()));
         container_sud.add(new JLabel("Noir : "+plateau.scoreNoir()));
@@ -113,8 +120,6 @@ public class Fenetre extends JFrame implements ActionListener {
     }
 
 }
-
-
 
 class CustomMouseListener implements ActionListener{
 

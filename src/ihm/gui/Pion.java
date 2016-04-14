@@ -6,24 +6,17 @@ import javax.swing.JPanel;
 
 public class Pion extends JPanel {
 
-    private Couleur couleur;
-
 
     public Pion(Couleur couleur) {
-        this.couleur = couleur;
         setOpaque(false);
         switch (couleur) {
         case BLANC :
             setForeground(Color.WHITE);
-            setBackground(new Color(200, 200, 200));
+            setBackground(Color.LIGHT_GRAY);
             break;
         case NOIR :
-            setForeground(new Color(70, 70, 70));
-            setBackground(new Color(200, 200, 200));
-            break;
-        case ROUGE : 
-            setForeground(new Color(255, 0, 0));
-            setBackground(new Color(200, 200, 200));
+            setForeground(Color.BLACK);
+            setBackground(Color.DARK_GRAY);
             break;
         }
     }
@@ -44,10 +37,4 @@ public class Pion extends JPanel {
         g.fillOval(5, 5, getWidth()-10, getHeight()-10);
 
     }
-
-    public Couleur getCouleur() {
-        return couleur;
-    }
-
-
 }
