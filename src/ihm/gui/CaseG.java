@@ -11,10 +11,10 @@ public class CaseG extends JPanel {
     public CaseG(Case c){
         setLayout(new GridLayout(1,0));
         initCouleur();
-        update(c);
+        update(c,false);
     }
     
-    public void update(Case c){
+    public void update(Case c, boolean blanc){
         initCouleur();
         removeAll();
         if (c.remplie())
@@ -30,8 +30,15 @@ public class CaseG extends JPanel {
         }
         else if (c.jouable())
         {
-            setBackground(Color.BLUE);
-            setForeground(Color.LIGHT_GRAY);
+            if(blanc){
+                setBackground(Color.LIGHT_GRAY);
+                setForeground(Color.BLUE);
+            }
+            else{
+                setBackground(Color.DARK_GRAY);
+                setForeground(Color.BLUE);
+            }
+            
         }
     }
     

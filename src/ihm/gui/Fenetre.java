@@ -2,6 +2,8 @@ package ihm.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 import javax.swing.*;
 import jeu.*;
 import jeu.core.Jeu;
@@ -14,13 +16,19 @@ public class Fenetre extends JFrame implements ActionListener {
 
     private Plateau plateau;
     private Case[] damier;
+    private boolean ianoir;
+    private boolean iablanc;
+    private int[] score;
 
 
     public Fenetre(Plateau plateau){
 
         this.plateau = plateau;
         this.damier = plateau.getDamier();
-
+        ianoir = false;
+        iablanc = false;
+        score = new int[2]; score[0]=0; score[1]=0;
+        
         this.setTitle("Reverso"); //titre
         this.setSize(500, 500); // taille de la fenetre (500x500)
         this.setLocationRelativeTo(null); // centré 
@@ -32,34 +40,8 @@ public class Fenetre extends JFrame implements ActionListener {
         container_sud = new JPanel();
 
         //Haut de la fenêtre
-        this.getContentPane().add(container_nord,BorderLayout.NORTH);
-        JButton bouton = new JButton("Recommencer");
-        bouton.addActionListener(new CustomMouseListener(this){
-
-            @Override
-            public void actionPerformed(ActionEvent ae){
-                fenetre.recommencer();
-            }});
-        container_nord.add(bouton);
+        barremenu();
         
-        //Bar de menu? :P
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Rejouer");
-        JMenuItem jvj = new JMenuItem("2 joueurs");
-        JMenuItem ia1 = new JMenuItem("IA lvl1");
-        menu.add(jvj);
-        menu.add(ia1);
-        menuBar.add(menu);
-        jvj.addActionListener(new ActionListener(){
-                            public void actionPerformed(ActionEvent e)
-                            {
-                                    recommencer();
-                            }
-                    });
-        this.setJMenuBar(menuBar);
-
-
-
         //Milieu de la fenêtre
         this.getContentPane().add(container_centre,BorderLayout.CENTER);
         GridLayout grille = new GridLayout(8,8);
@@ -74,7 +56,7 @@ public class Fenetre extends JFrame implements ActionListener {
         }
         container_centre.repaint();
 
-        //Grille et scores
+        this.getContentPane().add(container_nord,BorderLayout.NORTH);
         this.getContentPane().add(container_centre,BorderLayout.CENTER);
         this.getContentPane().add(container_sud,BorderLayout.SOUTH);
         actualiser();
@@ -86,51 +68,111 @@ public class Fenetre extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public void barremenu(){
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu = new JMenu("Rejouer");
+        JMenuItem jvj = new JMenuItem("2 joueurs");
+        JMenuItem ia1 = new JMenuItem("IA lvl1");
+        menu.add(jvj);
+        menu.add(ia1);
+        menuBar.add(menu);
+        jvj.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e)
+                            {
+                                    pvp();
+                            }
+                    });
+        this.setJMenuBar(menuBar);
+        ia1.addActionListener(new ActionListener(){
+                            public void actionPerformed(ActionEvent e)
+                            {
+                                    ia1();
+                            }
+                    });
+        this.setJMenuBar(menuBar);
+    }
 
 
     public void clicCase(int id){
         if (damier[id].jouable()){
-            plateau.jouer(id);
-            actualiser();
+            if((plateau.tourBlanc()&& !iablanc) || (!plateau.tourBlanc()&& !ianoir)){
+                plateau.jouer(id);
+                actualiser();
+            }
         }
     }
 
-    public void recommencer(){
+    public void pvp(){
+        this.plateau = new Jeu();
+        ianoir = false;
+        iablanc = false;
+        this.actualiser();
+    }
+    
+    public void ia1(){
         this.plateau = new Jeu();
         this.actualiser();
     }
 
     public void actualiser(){
+        String str;
         damier = plateau.getDamier();
         Component[] cases = container_centre.getComponents();
         for (int i=0; i<64; i++){
-            ((CaseG) cases[i]).update(damier[i]);
+            ((CaseG) cases[i]).update(damier[i],plateau.tourBlanc());
         }
+        
         container_sud.removeAll();
-        container_sud.add(new JLabel("Blanc : "+plateau.scoreBlanc()));
-        container_sud.add(new JLabel("Noir : "+plateau.scoreNoir()));
         if(plateau.termine())
-            container_sud.add(new JLabel("FINI"));
-        else
-            container_sud.add(new JLabel("Au tour de : "+(plateau.tourBlanc()? "blanc" : "noir")));
-        if(plateau.passe())
-            container_sud.add(new JLabel("Tour passé"));
+            str=scorefin();
+        else{
+            str ="Blanc : "+plateau.scoreBlanc()+" Noir : "+plateau.scoreNoir();
+            str+=" Au tour de : "+(plateau.tourBlanc()? "blanc" : "noir");
+            if(plateau.passe())
+            str+="Tour passé";
+        }
+        container_sud.add(new JLabel(str));
+        
+        container_nord.removeAll();
+        str="Victoires : Blanc : "+score[0]+" Noir : "+score[1];
+        container_nord.add(new JLabel(str));
+        
         revalidate();
         repaint();
+        if(plateau.tourBlanc()&&iablanc)
+            joueria(true);
+        if(!plateau.tourBlanc()&&ianoir)
+            joueria(false);
+    }
+    
+    public String scorefin(){
+        String str;
+            int res[] = new int[2];
+            if(plateau.tourBlanc()){
+                res[0]=plateau.scoreBlanc();
+                res[1]=64-res[0];
+            }
+            else{
+                res[1]=plateau.scoreNoir();
+                res[0]=64-res[1];
+            }
+            if (res[1]>res[0]){
+                str = "Noir gagne ";
+                score[1]++;
+            }
+            else if (res[1]<res[0]){
+                str = "Blanc gagne ";
+                score[0]++;
+            }
+            else
+                str="Match nul ";
+            str+=""+max(res[1],res[0])+" à "+min(res[1],res[0]);
+        return str;
     }
 
-}
+    public void joueria(boolean blanc){
 
-class CustomMouseListener implements ActionListener{
-
-	protected Fenetre fenetre;
-
-	public CustomMouseListener(Fenetre f){
-		fenetre = f;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent ae) {
-	}
-
+    }
+    
 }
