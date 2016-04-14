@@ -18,8 +18,9 @@ public class Reverso {
         Clavier c = new Clavier();
         IntelligenceHasard ia1 = new IntelligenceHasard(j);
         IntelligenceNormale ia2 = new IntelligenceNormale(j);
+        IntelligenceRecursive ia3 = new IntelligenceRecursive(j,70);
         
-        j.start(c,ia2);
+        j.start(c,ia3);
 
     }
 }
