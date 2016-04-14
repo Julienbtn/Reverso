@@ -15,6 +15,7 @@ public class Reverso {
 
 
         // Jeu en mode console qui fonctionne
+        /*
         Clavier c = new Clavier();
         IntelligenceHasard ia1; 
         IntelligenceNormale ia2; 
@@ -27,6 +28,6 @@ public class Reverso {
             c.pause();
             j= new Jeu();
         }
-
+*/
     }
 }
