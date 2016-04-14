@@ -1,4 +1,4 @@
-package ihm;
+package ihm.gui;
 
 
 public enum Couleur {

@@ -1,4 +1,4 @@
-package ihm;
+package ihm.gui;
 
 import java.awt.*;
 import javax.swing.JPanel;

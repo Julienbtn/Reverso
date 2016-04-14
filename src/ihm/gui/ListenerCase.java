@@ -1,37 +1,40 @@
-package ihm;
+package ihm.gui;
     
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import jeu.Case;
-import jeu.Plateau;
 
 
 public class ListenerCase implements MouseListener{
     
-    private Case case1;
-    private Plateau plateau;
-    private int id;
-    private Fenetre f;
+    private final int id;
 
-    public ListenerCase(Case case1, Plateau plateau, int id, Fenetre f) {
-        super();
-        this.case1 = case1;
-        this.plateau = plateau;
+
+
+    private final Fenetre fenetre;
+
+    public ListenerCase(int id, Fenetre f) {
+
+
+
         this.id = id;
-        this.f = f;
+        this.fenetre = f;
+
     }
 
 
+    @Override
     public void mouseClicked(MouseEvent arg0) {
     
     }
 
 
+    @Override
     public void mouseEntered(MouseEvent arg0) {
         
     }
 
 
+    @Override
     public void mouseExited(MouseEvent arg0) {
         
     }
@@ -39,13 +42,11 @@ public class ListenerCase implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent arg0) {
-        if(case1.jouable()){
-            plateau.jouer(id);
-            f.actualise(plateau);
-        }  
+        fenetre.clicCase(id); 
     }
 
 
+    @Override
     public void mouseReleased(MouseEvent arg0) {
         
     }  

@@ -2,7 +2,7 @@ package reverso;
 
 import jeu.core.Jeu;
 import jeu.ia.*;
-import ihm.Fenetre;
+import ihm.gui.Fenetre;
 
 
 public class Reverso {

@@ -1,4 +1,4 @@
-package ihm;
+package ihm.gui;
  
 import java.awt.*;
 import javax.swing.JPanel;
@@ -13,10 +13,11 @@ public class CaseG extends JPanel {
     public CaseG(Case c){
         setLayout(new GridLayout(1,0));
         initCouleur();
-        init(c);
+        update(c);
     }
     
-    private void init(Case c){
+    public void update(Case c){
+        removeAll();
         if (c.remplie())
         {
             if (c.blanche())
