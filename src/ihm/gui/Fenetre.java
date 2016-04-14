@@ -71,7 +71,7 @@ public class Fenetre extends JFrame implements ActionListener {
     
     public void barremenu(){
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Rejouer");
+        JMenu menu = new JMenu("Jouer");
         JMenuItem jvj = new JMenuItem("2 joueurs");
         JMenuItem ia1 = new JMenuItem("IA lvl1");
         menu.add(jvj);
@@ -172,7 +172,7 @@ public class Fenetre extends JFrame implements ActionListener {
     }
 
     public void joueria(boolean blanc){
-
+        
     }
     
 }
