@@ -1,7 +1,6 @@
 package reverso;
 
 import jeu.core.Jeu;
-import jeu.ia.*;
 import ihm.gui.Fenetre;
 
 

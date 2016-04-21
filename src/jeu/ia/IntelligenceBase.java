@@ -21,11 +21,9 @@ public abstract class IntelligenceBase{
         Case[] damier = p.getDamier();
         ArrayList<Integer> jouables = new ArrayList<>();
         
-        for (int i=0; i<64; i++){
+        for (int i=0; i<64; i++)
             if (damier[i].jouable())
                 jouables.add(i);
-            
-        }
         
         if (jouables.size()<1)
             throw new NoFreeCaseException();

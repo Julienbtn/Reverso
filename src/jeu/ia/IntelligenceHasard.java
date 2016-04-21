@@ -1,10 +1,7 @@
 package jeu.ia;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
-import jeu.Case;
 import jeu.Plateau;
 
 public class IntelligenceHasard extends IntelligenceBase{

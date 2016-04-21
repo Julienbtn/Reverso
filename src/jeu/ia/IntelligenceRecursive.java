@@ -1,7 +1,6 @@
 package jeu.ia;
 import static java.lang.Math.*;
 import java.util.ArrayList;
-import java.util.Random;
 import jeu.Plateau;
 
 public class IntelligenceRecursive extends IntelligenceBase{

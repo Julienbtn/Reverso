@@ -4,29 +4,32 @@ import java.awt.*;
 import java.awt.event.*;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import jeu.*;
 import jeu.core.Jeu;
+import jeu.ia.*;
 
 
-public class Fenetre extends JFrame implements ActionListener {
+public class Fenetre extends JFrame {
     private final JPanel container_nord;
     private final JPanel container_centre;
     private final JPanel container_sud;
 
     private Plateau plateau;
     private Case[] damier;
-    private boolean ianoir;
-    private boolean iablanc;
     private int[] score;
+    private IntelligenceBase iablanc;
+    private IntelligenceBase ianoir;
 
 
     public Fenetre(Plateau plateau){
 
         this.plateau = plateau;
         this.damier = plateau.getDamier();
-        ianoir = false;
-        iablanc = false;
+        ianoir = null;
+        iablanc = null;
         score = new int[2]; score[0]=0; score[1]=0;
         
         this.setTitle("Reverso"); //titre
@@ -43,7 +46,6 @@ public class Fenetre extends JFrame implements ActionListener {
         barremenu();
         
         //Milieu de la fenêtre
-        this.getContentPane().add(container_centre,BorderLayout.CENTER);
         GridLayout grille = new GridLayout(8,8);
         container_centre.setLayout(grille);
         
@@ -55,7 +57,7 @@ public class Fenetre extends JFrame implements ActionListener {
             container_centre.add(caseA);
         }
         container_centre.repaint();
-
+        
         this.getContentPane().add(container_nord,BorderLayout.NORTH);
         this.getContentPane().add(container_centre,BorderLayout.CENTER);
         this.getContentPane().add(container_sud,BorderLayout.SOUTH);
@@ -64,55 +66,62 @@ public class Fenetre extends JFrame implements ActionListener {
         this.setVisible(true); // rend visible la fenêtre
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public void barremenu(){
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Jouer");
-        JMenuItem jvj = new JMenuItem("2 joueurs");
-        JMenuItem ia1 = new JMenuItem("IA lvl1");
-        menu.add(jvj);
-        menu.add(ia1);
-        menuBar.add(menu);
-        jvj.addActionListener(new ActionListener(){
-                            public void actionPerformed(ActionEvent e)
-                            {
-                                    pvp();
-                            }
-                    });
-        this.setJMenuBar(menuBar);
-        ia1.addActionListener(new ActionListener(){
-                            public void actionPerformed(ActionEvent e)
-                            {
-                                    ia1();
-                            }
-                    });
-        this.setJMenuBar(menuBar);
+        String[] choix = {"Joueur", "ia1"};
+        JButton reload = new JButton("Rejouer");
+        JButton valider = new JButton("Jouer");
+        JComboBox blanc = new JComboBox(choix);
+        JComboBox noir = new JComboBox(choix);
+        blanc.setPreferredSize(new Dimension(100, 20));
+        noir.setPreferredSize(new Dimension(100, 20));
+        container_nord.add(reload);
+        container_nord.add(new JLabel("   Blanc :"));
+        container_nord.add(blanc);
+        container_nord.add(new JLabel("   Noir :"));
+        container_nord.add(noir);
+        container_nord.add(new JLabel("   "));
+        container_nord.add(valider);
+        valider.addActionListener((ActionEvent e) -> {
+            rejouer();
+            switch(getChoix(blanc.getSelectedItem().toString(),choix)){
+                case 1: iablanc=null; break;
+                case 2: iablanc=new IntelligenceHasard(plateau); break;
+                default: iablanc=null; break;
+            }
+            switch(getChoix(noir.getSelectedItem().toString(),choix)){
+                case 1: ianoir=null; break;
+                case 2: ianoir=new IntelligenceHasard(plateau); break;
+                default: ianoir=null; break;
+            }
+            actualiser();
+        });
+        reload.addActionListener((ActionEvent e) -> {
+            rejouer();
+            actualiser();
+        });
+    }
+    
+    public int getChoix(String str, String[] tab){
+        for(int i=0;i<tab.length;i++)
+            if(str.equals(tab[i]))
+                return i+1;
+        return -1;
     }
 
 
     public void clicCase(int id){
         if (damier[id].jouable()){
-            if((plateau.tourBlanc()&& !iablanc) || (!plateau.tourBlanc()&& !ianoir)){
+            if((plateau.tourBlanc()&& iablanc == null) || (!plateau.tourBlanc()&& ianoir == null)){
                 plateau.jouer(id);
                 actualiser();
             }
         }
     }
-
-    public void pvp(){
-        this.plateau = new Jeu();
-        ianoir = false;
-        iablanc = false;
-        this.actualiser();
-    }
     
-    public void ia1(){
+    public void rejouer(){
         this.plateau = new Jeu();
-        this.actualiser();
+        this.damier = plateau.getDamier();
     }
 
     public void actualiser(){
@@ -124,26 +133,29 @@ public class Fenetre extends JFrame implements ActionListener {
         }
         
         container_sud.removeAll();
-        if(plateau.termine())
-            str=scorefin();
+        if(plateau.termine()){
+            str=scorefin();}
         else{
-            str ="Blanc : "+plateau.scoreBlanc()+" Noir : "+plateau.scoreNoir();
-            str+=" Au tour de : "+(plateau.tourBlanc()? "blanc" : "noir");
-            if(plateau.passe())
-            str+="Tour passé";
+            str ="Scores : Blanc : "+plateau.scoreBlanc()+" Noir : "+plateau.scoreNoir()+"    ";
+            str+=(plateau.passe()?"Encore a":"A")+"u tour de : "+(plateau.tourBlanc()? "blanc    " : "noir    ");
         }
-        container_sud.add(new JLabel(str));
-        
-        container_nord.removeAll();
+        container_sud.add(new JLabel(str));    
         str="Victoires : Blanc : "+score[0]+" Noir : "+score[1];
-        container_nord.add(new JLabel(str));
+        container_sud.add(new JLabel(str)); 
         
         revalidate();
         repaint();
-        if(plateau.tourBlanc()&&iablanc)
-            joueria(true);
-        if(!plateau.tourBlanc()&&ianoir)
-            joueria(false);
+        if (!plateau.termine()){
+            try {
+                if(plateau.tourBlanc()&& iablanc !=null)
+                    joueria(true);
+                if(!plateau.tourBlanc()&& ianoir!=null)
+                    joueria(false);
+            } catch (NoFreeCaseException ex) {
+                Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Si ça s'affiche voir avec Axel et ses exceptions bizarres !");
+            }
+        }
     }
     
     public String scorefin(){
@@ -171,8 +183,12 @@ public class Fenetre extends JFrame implements ActionListener {
         return str;
     }
 
-    public void joueria(boolean blanc){
-        
+    public void joueria(boolean blanc) throws NoFreeCaseException{
+        if (blanc)
+            plateau.jouer(iablanc.mouvement());
+        else
+            plateau.jouer(ianoir.mouvement());
+        actualiser();
     }
     
 }

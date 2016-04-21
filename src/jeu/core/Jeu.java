@@ -1,7 +1,6 @@
 package jeu.core;
 
 import jeu.Plateau;
-import jeu.ia.IntelligenceBase;
 
 public class Jeu implements Plateau{
     private TableauCase plateau;
@@ -10,16 +9,13 @@ public class Jeu implements Plateau{
     // Implémentation interface IA !
     private boolean passe;
     private boolean fini;
-    private IntelligenceBase iablanc;
-    private IntelligenceBase ianoir;
+  
 
     public Jeu(){
         plateau = new TableauCase(8,8);
         tourBlanc = false;
         passe = false;
         fini = false;
-        iablanc = null;
-        ianoir = null;
         plateau.chercherCase(tourBlanc);
     }
     
