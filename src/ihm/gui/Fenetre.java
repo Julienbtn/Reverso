@@ -18,7 +18,6 @@ public class Fenetre extends JFrame {
     private final JPanel container_sud;
 
     private Plateau plateau;
-    private Case[] damier;
     private int[] score;
     private IntelligenceBase iablanc;
     private IntelligenceBase ianoir;
@@ -27,7 +26,6 @@ public class Fenetre extends JFrame {
     public Fenetre(Plateau plateau){
 
         this.plateau = plateau;
-        this.damier = plateau.getDamier();
         ianoir = null;
         iablanc = null;
         score = new int[2]; score[0]=0; score[1]=0;
@@ -37,7 +35,7 @@ public class Fenetre extends JFrame {
         this.setLocationRelativeTo(null); // centré 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //bouton croix activé (quitte le processus lorsqu'on appuye dessus            
         this.setResizable(true); // possibilité de modifier la taille de la fenêtre
-        this.setAlwaysOnTop(true); // la fenêtre reste devant
+        //this.setAlwaysOnTop(true); // la fenêtre reste devant
         container_nord = new JPanel();
         container_centre = new JPanel();
         container_sud = new JPanel();
@@ -52,7 +50,7 @@ public class Fenetre extends JFrame {
 
         for (int i = 0; i<64; i++)
         {
-            CaseG caseA = new CaseG(damier[i]);
+            CaseG caseA = new CaseG(plateau.getDamier()[i]);
             caseA.addMouseListener(new ListenerCase(i,this));
             container_centre.add(caseA);
         }
@@ -69,13 +67,11 @@ public class Fenetre extends JFrame {
     
     public void barremenu(){
         String[] choix = {"Joueur", "ia1"};
-        JButton reload = new JButton("Rejouer");
         JButton valider = new JButton("Jouer");
         JComboBox blanc = new JComboBox(choix);
         JComboBox noir = new JComboBox(choix);
         blanc.setPreferredSize(new Dimension(100, 20));
         noir.setPreferredSize(new Dimension(100, 20));
-        container_nord.add(reload);
         container_nord.add(new JLabel("   Blanc :"));
         container_nord.add(blanc);
         container_nord.add(new JLabel("   Noir :"));
@@ -83,21 +79,19 @@ public class Fenetre extends JFrame {
         container_nord.add(new JLabel("   "));
         container_nord.add(valider);
         valider.addActionListener((ActionEvent e) -> {
-            rejouer();
+            this.plateau = new Jeu();
             switch(getChoix(blanc.getSelectedItem().toString(),choix)){
+                case -1: System.out.println("Erreur menu déroulant blanc");break;
                 case 1: iablanc=null; break;
                 case 2: iablanc=new IntelligenceHasard(plateau); break;
                 default: iablanc=null; break;
             }
             switch(getChoix(noir.getSelectedItem().toString(),choix)){
+                case -1: System.out.println("Erreur menu déroulant noir");break;
                 case 1: ianoir=null; break;
                 case 2: ianoir=new IntelligenceHasard(plateau); break;
                 default: ianoir=null; break;
             }
-            actualiser();
-        });
-        reload.addActionListener((ActionEvent e) -> {
-            rejouer();
             actualiser();
         });
     }
@@ -111,25 +105,20 @@ public class Fenetre extends JFrame {
 
 
     public void clicCase(int id){
-        if (damier[id].jouable()){
+        if (plateau.getDamier()[id].jouable()){
             if((plateau.tourBlanc()&& iablanc == null) || (!plateau.tourBlanc()&& ianoir == null)){
                 plateau.jouer(id);
                 actualiser();
             }
         }
     }
-    
-    public void rejouer(){
-        this.plateau = new Jeu();
-        this.damier = plateau.getDamier();
-    }
 
     public void actualiser(){
         String str;
-        damier = plateau.getDamier();
         Component[] cases = container_centre.getComponents();
         for (int i=0; i<64; i++){
-            ((CaseG) cases[i]).update(damier[i],plateau.tourBlanc());
+            boolean ia = (plateau.tourBlanc() && iablanc!=null) || (!plateau.tourBlanc() && ianoir!=null);
+            ((CaseG) cases[i]).update(plateau.getDamier()[i],plateau.tourBlanc(),ia);
         }
         
         container_sud.removeAll();
@@ -185,10 +174,16 @@ public class Fenetre extends JFrame {
 
     public void joueria(boolean blanc) throws NoFreeCaseException{
         if (blanc)
-            plateau.jouer(iablanc.mouvement());
+            jouerpouria(iablanc.mouvement());
         else
-            plateau.jouer(ianoir.mouvement());
-        actualiser();
+            jouerpouria(ianoir.mouvement());
     }
-    
+    public void jouerpouria(int id){
+        if (plateau.getDamier()[id].jouable()){
+            if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null)){
+                plateau.jouer(id);
+                actualiser();
+            }
+        }
+    }
 }

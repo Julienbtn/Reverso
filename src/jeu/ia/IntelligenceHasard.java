@@ -16,6 +16,8 @@ public class IntelligenceHasard extends IntelligenceBase{
         
         Random rnd  = new Random();
         ArrayList<Integer> jouables = casesJouables();
+        if(jouables.isEmpty())
+            System.out.println("On a un soucis je crois");
         
         return jouables.get(rnd.nextInt(jouables.size()));
     }

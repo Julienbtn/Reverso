@@ -25,7 +25,7 @@ public abstract class IntelligenceBase{
             if (damier[i].jouable())
                 jouables.add(i);
         
-        if (jouables.size()<1)
+        if (jouables.isEmpty())
             throw new NoFreeCaseException();
         return jouables;
     }
