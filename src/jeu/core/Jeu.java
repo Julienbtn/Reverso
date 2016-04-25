@@ -41,15 +41,18 @@ public class Jeu implements Plateau{
     }
     
     // Implémentation interface IA !
+    @Override
     public Jeu copie(){
         Jeu copie;
         copie = new Jeu(tourBlanc, passe, fini);
         copie.plateau = plateau.copieTout();
         return copie;
     }
+    @Override
     public CaseR[] getDamier(){
         return plateau.copieTab();
     }
+    @Override
     public void jouer(int idCase){
         if (idCase<0 ||idCase>=64)
             throw new IndexOutOfBoundsException();
@@ -69,24 +72,30 @@ public class Jeu implements Plateau{
             }
         }
     }
+    @Override
     public boolean tourBlanc(){
         return tourBlanc;
     }
+    @Override
     public boolean passe(){
         return passe;
     }
+    @Override
     public int scoreBlanc(){
         return plateau.comptePoints(true);
     }
+    @Override
     public int scoreNoir(){
         return plateau.comptePoints(false);
     }
+    @Override
     public boolean victoireBlanc(){
         if (termine())
             if (scoreBlanc()>scoreNoir())
                 return true;
         return false;
     }
+    @Override
     public boolean termine(){
         return fini;
     }

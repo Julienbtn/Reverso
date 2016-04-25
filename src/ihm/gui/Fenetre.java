@@ -21,6 +21,8 @@ public class Fenetre extends JFrame {
     private int[] score;
     private IntelligenceBase iablanc;
     private IntelligenceBase ianoir;
+    
+    private Timer timer;
 
 
     public Fenetre(Plateau plateau){
@@ -39,6 +41,8 @@ public class Fenetre extends JFrame {
         container_nord = new JPanel();
         container_centre = new JPanel();
         container_sud = new JPanel();
+        
+        
 
         //Haut de la fenêtre
         barremenu();
@@ -62,6 +66,24 @@ public class Fenetre extends JFrame {
         actualiser();
 
         this.setVisible(true); // rend visible la fenêtre
+        
+        // Timer d'update
+        timer = new Timer(20, (ActionEvent ae) -> {
+            
+            if (!this.plateau.termine()){
+                try {
+                    if(this.plateau.tourBlanc() && iablanc != null)
+                        this.joueria(true);
+                    if(!this.plateau.tourBlanc() && ianoir != null)
+                        this.joueria(false);
+                } catch (NoFreeCaseException ex) {
+                    Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Si ça s'affiche voir avec Axel et ses exceptions bizarres !");
+                }
+            }
+        });
+        timer.setRepeats(true);
+        timer.start();
     }
 
     
@@ -93,6 +115,7 @@ public class Fenetre extends JFrame {
                 default: ianoir=null; break;
             }
             actualiser();
+            
         });
     }
     
@@ -134,17 +157,6 @@ public class Fenetre extends JFrame {
         
         revalidate();
         repaint();
-        if (!plateau.termine()){
-            try {
-                if(plateau.tourBlanc()&& iablanc !=null)
-                    joueria(true);
-                if(!plateau.tourBlanc()&& ianoir!=null)
-                    joueria(false);
-            } catch (NoFreeCaseException ex) {
-                Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("Si ça s'affiche voir avec Axel et ses exceptions bizarres !");
-            }
-        }
     }
     
     public String scorefin(){
@@ -177,6 +189,8 @@ public class Fenetre extends JFrame {
             jouerpouria(iablanc.mouvement());
         else
             jouerpouria(ianoir.mouvement());
+        
+        
     }
     public void jouerpouria(int id){
         if (plateau.getDamier()[id].jouable()){
@@ -186,4 +200,10 @@ public class Fenetre extends JFrame {
             }
         }
     }
+    
+    
+    public Plateau getPlateau(){
+        return plateau;
+    }
+
 }
