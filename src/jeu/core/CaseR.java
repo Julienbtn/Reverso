@@ -60,7 +60,7 @@ public class CaseR implements Case{
         return copie;
     }
     
-    
+        
     // Implémentation interface IA !
     
     public boolean remplie(){

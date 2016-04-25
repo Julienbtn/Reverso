@@ -22,7 +22,7 @@ public class Fenetre extends JFrame {
     private IntelligenceBase iablanc;
     private IntelligenceBase ianoir;
     
-    private Timer timer;
+    //private Timer timer;
 
 
     public Fenetre(Plateau plateau){
@@ -67,6 +67,8 @@ public class Fenetre extends JFrame {
 
         this.setVisible(true); // rend visible la fenêtre
         
+        /*pas optimiser car on répète tout le temps ça bouffe trop de mémoire
+          sur windows xp
         // Timer d'update
         timer = new Timer(20, (ActionEvent ae) -> {
             
@@ -74,7 +76,7 @@ public class Fenetre extends JFrame {
                 try {
                     if(this.plateau.tourBlanc() && iablanc != null)
                         this.joueria(true);
-                    if(!this.plateau.tourBlanc() && ianoir != null)
+                    else if(!this.plateau.tourBlanc() && ianoir != null)
                         this.joueria(false);
                 } catch (NoFreeCaseException ex) {
                     Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,6 +86,7 @@ public class Fenetre extends JFrame {
         });
         timer.setRepeats(true);
         timer.start();
+        */
     }
 
     
@@ -157,6 +160,18 @@ public class Fenetre extends JFrame {
         
         revalidate();
         repaint();
+        
+        // Truc pas beau qu'Axel n'aime pas
+        if (!plateau.termine()){
+            try {
+                if(plateau.tourBlanc()&& iablanc !=null)
+                    joueria(true);
+                else if(!plateau.tourBlanc()&& ianoir!=null)
+                    joueria(false);
+            } catch (NoFreeCaseException ex) {
+                Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public String scorefin(){
@@ -189,9 +204,8 @@ public class Fenetre extends JFrame {
             jouerpouria(iablanc.mouvement());
         else
             jouerpouria(ianoir.mouvement());
-        
-        
     }
+    
     public void jouerpouria(int id){
         if (plateau.getDamier()[id].jouable()){
             if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null)){
@@ -200,7 +214,6 @@ public class Fenetre extends JFrame {
             }
         }
     }
-    
     
     public Plateau getPlateau(){
         return plateau;

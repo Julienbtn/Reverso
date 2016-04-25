@@ -20,13 +20,9 @@ public class CaseG extends JPanel {
         if (c.remplie())
         {
             if (c.blanche())
-            {
                 add(creerPion(Couleur.BLANC));
-            }
             else 
-            {
                 add(creerPion(Couleur.NOIR));
-            }
         }
         else if (c.jouable()&&!ia)
         {
