@@ -13,14 +13,19 @@ import jeu.Plateau;
  * @author Podoko
  */
 public class IntelligenceDiff extends IntelligenceBase {
-
+    private int profRec;
     public IntelligenceDiff(Plateau plate) {
+        this(plate, 5);
+    }
+
+    public IntelligenceDiff(Plateau plate, int i) {
         super(plate);
+        profRec = i;
     }
     
     private int[] meilleurJo(int prof, Plateau plate) throws NoFreeCaseException{
         ArrayList<Integer> cases = casesJouables(plate);
-        System.out.println("\tJO " + prof +" Poss : " + cases.size());
+        // System.out.println("\tJO " + prof +" Poss : " + cases.size());
         Plateau simul;
         int[] best = null;
         
@@ -41,7 +46,7 @@ public class IntelligenceDiff extends IntelligenceBase {
                     score = tourIa(simul)? meilleurIa(prof-1, simul) : meilleurJo(prof-1, simul);
                 
                 if (score[1] <= best[1])
-                    best = score;
+                    best[1] = score[1];
             }
         }
         
@@ -54,7 +59,7 @@ public class IntelligenceDiff extends IntelligenceBase {
     private int[] meilleurIa(int prof, Plateau plate) throws NoFreeCaseException{
         
         ArrayList<Integer> cases = casesJouables(plate);
-        System.out.println("IA " + prof +" Poss : " + cases.size());
+        // System.out.println("IA " + prof +" Poss : " + cases.size());
         Plateau simul;
         int[] best = null;
         
@@ -76,13 +81,13 @@ public class IntelligenceDiff extends IntelligenceBase {
                 if (!simul.termine()) // Vérifier aussi si c'est pas déjà terminé
                     score = tourIa(simul)? meilleurIa(prof-1, simul) : meilleurJo(prof-1, simul);
                 
-                if (score[1] >= best[1])
-                    best = score;
+                if (score[1] >= best[1]){
+                    best[1] = score[1];
+                }
             }
             
             
         }
-        
         return best;
     }
     
@@ -95,8 +100,7 @@ public class IntelligenceDiff extends IntelligenceBase {
     
     @Override
     public int mouvement() throws NoFreeCaseException {
-        System.out.println("Appel");
-        return meilleurIa(1, plateau)[0];
+        return meilleurIa(profRec, plateau)[0];
     }
     
 }

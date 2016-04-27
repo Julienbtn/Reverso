@@ -69,7 +69,7 @@ public class Fenetre extends JFrame {
         
         
         // Timer d'update
-        timer = new Timer(1000, (ActionEvent ae) -> {
+        timer = new Timer(100, (ActionEvent ae) -> {
             
             if (!this.plateau.termine()){
                 try {
@@ -109,14 +109,14 @@ public class Fenetre extends JFrame {
                 case -1: System.out.println("Erreur menu déroulant blanc");break;
                 case 1: iablanc=null; break;
                 case 2: iablanc=new IntelligenceHasard(plateau); break;
-                case 3: iablanc=new IntelligenceDiff(plateau); break;
+                case 3: iablanc=new IntelligenceDiff(plateau, 7); break;
                 default: iablanc=null; break;
             }
             switch(getChoix(noir.getSelectedItem().toString(),choix)){
                 case -1: System.out.println("Erreur menu déroulant noir");break;
                 case 1: ianoir=null; break;
                 case 2: ianoir=new IntelligenceHasard(plateau); break;
-                case 3: ianoir=new IntelligenceDiff(plateau); break;
+                case 3: ianoir=new IntelligenceDiff(plateau, 5); break;
                 default: ianoir=null; break;
             }
             actualiser();
@@ -224,8 +224,10 @@ public class Fenetre extends JFrame {
             if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null)){
                 plateau.jouer(id);
                 //actualiser();
+                
             }
-        }
+        }else
+            System.out.println("Erreur mauvaise case");
     }
     
     public Plateau getPlateau(){
