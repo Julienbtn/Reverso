@@ -1,6 +1,7 @@
 package ihm.gui;
  
 import java.awt.*;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import jeu.Case;
 
@@ -47,8 +48,9 @@ public class CaseG extends JPanel {
     }
         
     private void initCouleur(){
-            setBackground(new Color(0, 240, 0));
-            setForeground(new Color(150, 150, 150));
+        setBackground(new Color(0,102,51));
+        setForeground(new Color(0,102,51));
+        setBorder(BorderFactory.createLineBorder(Color.black));
             
     }
     
