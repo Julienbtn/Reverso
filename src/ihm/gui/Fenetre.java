@@ -91,7 +91,7 @@ public class Fenetre extends JFrame {
 
     
     public void barremenu(){
-        String[] choix = {"Joueur", "ia1"};
+        String[] choix = {"Joueur", "Facile"};
         JButton valider = new JButton("Jouer");
         JComboBox blanc = new JComboBox(choix);
         JComboBox noir = new JComboBox(choix);
@@ -176,6 +176,14 @@ public class Fenetre extends JFrame {
     
     public String scorefin(){
         String str;
+        JFrame victoire = new JFrame();
+        victoire.setSize(300, 260);
+        victoire.setLocationRelativeTo(this);
+        JLabel imageB = new JLabel( new ImageIcon( "VictoireB.jpg"));
+        JLabel imageN = new JLabel( new ImageIcon( "VictoireN.jpg"));
+        JLabel imageE = new JLabel( new ImageIcon( "Null.jpg"));
+        JLabel texte = new JLabel();
+        victoire.repaint();
             int res[] = new int[2];
             if(plateau.tourBlanc()){
                 res[0]=plateau.scoreBlanc();
@@ -188,14 +196,28 @@ public class Fenetre extends JFrame {
             if (res[1]>res[0]){
                 str = "Noir gagne ";
                 score[1]++;
+                texte.setText(str);
+                victoire.add(texte,BorderLayout.NORTH);
+                victoire.add(imageN,BorderLayout.CENTER);
+                victoire.setVisible(true);
+                victoire.setAlwaysOnTop(true);
+               
             }
             else if (res[1]<res[0]){
                 str = "Blanc gagne ";
                 score[0]++;
+                victoire.add(new JLabel(str),BorderLayout.NORTH);
+                victoire.add(imageB,BorderLayout.CENTER);
+                victoire.setVisible(true);
+                victoire.setAlwaysOnTop(true);
             }
             else
                 str="Match nul ";
             str+=""+max(res[1],res[0])+" à "+min(res[1],res[0]);
+            victoire.add(new JLabel(str),BorderLayout.NORTH);
+                victoire.add(imageE,BorderLayout.CENTER);
+                victoire.setVisible(true);
+                victoire.setAlwaysOnTop(true);
         return str;
     }
 
