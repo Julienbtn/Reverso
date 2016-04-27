@@ -30,6 +30,18 @@ public abstract class IntelligenceBase{
         return jouables;
     }
     
+    protected int scoreIa(Plateau plate){
+        return (plateau.tourBlanc()) ? plate.scoreBlanc() : plate.scoreNoir();
+    }
+    
+    protected int scoreJo(Plateau plate){
+        return (plateau.tourBlanc()) ? plate.scoreNoir() : plate.scoreBlanc();
+    }
+    
+    protected boolean tourIa(Plateau plate){
+        return plate.tourBlanc() == plateau.tourBlanc();
+    }
+    
     
     protected Plateau simuler(Plateau source, int coup){
         Plateau res = source.copie();
