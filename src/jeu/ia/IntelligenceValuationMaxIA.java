@@ -16,15 +16,15 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
         int[] grille = new int[64];
         // On crée un patron correspondant au coin supérieur gauche
         int[] patron = new int[16];
-        patron[0]=500;
-        patron[1]=patron[4]=-150;
-        patron[2]=patron[8]=30;
-        patron[3]=patron[12]=10;
-        patron[5]=-250;
-        patron[6]=patron[7]=patron[9]=patron[13]=0;
+        patron[0]=1000;//angle
+        patron[1]=patron[4]=-50;//bord contre angle
+        patron[2]=patron[8]=10;//bord proche angle
+        patron[3]=patron[12]=4;//bord centre
+        patron[5]=-150;//diag contre angle
+        patron[6]=patron[7]=patron[9]=patron[13]=0;//case proche bord
         patron[10]=1;
         patron[11]=patron[14]=2;
-        patron[15]=16;
+        patron[15]=5;//cases du centre
         //On place le patron dans la grille, en le retournant si nécessaire
         for(int i=0;i<8;i++)
             for(int j=0;j<8;j++)
