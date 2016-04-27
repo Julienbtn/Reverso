@@ -301,5 +301,12 @@ public class TableauCase{
         return copie;
     }
     
+    public int compteCasesVides(){
+        int ret = 0;
+        for(int i=0;i<63;i++)
+            if(tab[i].isVide())
+                ret ++;
+        return ret;
+    }
 }
 

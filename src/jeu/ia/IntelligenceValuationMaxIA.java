@@ -18,8 +18,8 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
         int[] patron = new int[16];
         patron[0]=1000;//angle
         patron[1]=patron[4]=-50;//bord contre angle
-        patron[2]=patron[8]=10;//bord proche angle
-        patron[3]=patron[12]=4;//bord centre
+        patron[2]=patron[8]=30;//bord proche angle
+        patron[3]=patron[12]=15;//bord centre
         patron[5]=-150;//diag contre angle
         patron[6]=patron[7]=patron[9]=patron[13]=0;//case proche bord
         patron[10]=1;
@@ -45,10 +45,15 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
     
     public int calculerPoints(Plateau plate,boolean blanc){
         int score = 0;
-        for(int i= 0;i<64;i++)
-            if(plate.getDamier()[i].remplie())
-                if(plate.getDamier()[i].blanche()==blanc)
-                    score+=valeurs[i];
+        if(plate.nbCasesLibres()>4){
+            for(int i= 0;i<64;i++)
+                if(plate.getDamier()[i].remplie())
+                    if(plate.getDamier()[i].blanche()==blanc)
+                        score+=valeurs[i];
+        }
+        else { //2 derniers coups de l'IA
+            score = (blanc?plate.scoreBlanc():plate.scoreNoir());
+        }
         return score;
     }
     

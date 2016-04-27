@@ -99,4 +99,8 @@ public class Jeu implements Plateau{
     public boolean termine(){
         return fini;
     }
+    @Override
+    public int nbCasesLibres(){
+        return plateau.compteCasesVides();
+    }
 }

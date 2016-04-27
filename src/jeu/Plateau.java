@@ -20,4 +20,5 @@ public interface Plateau {
     
     public boolean victoireBlanc();         // Renvoie true si le joueur blanc a gagné
     public boolean termine();               // Renvoie true si jeu terminé
+    public int nbCasesLibres();               // Renvoie le nombre de cases vides
 }
