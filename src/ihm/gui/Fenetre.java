@@ -22,7 +22,7 @@ public class Fenetre extends JFrame {
     private IntelligenceBase iablanc;
     private IntelligenceBase ianoir;
     
-    //private Timer timer;
+    private Timer timer;
 
 
     public Fenetre(Plateau plateau){
@@ -67,10 +67,9 @@ public class Fenetre extends JFrame {
 
         this.setVisible(true); // rend visible la fenêtre
         
-        /*pas optimiser car on répète tout le temps ça bouffe trop de mémoire
-          sur windows xp
+        
         // Timer d'update
-        timer = new Timer(20, (ActionEvent ae) -> {
+        timer = new Timer(1000, (ActionEvent ae) -> {
             
             if (!this.plateau.termine()){
                 try {
@@ -83,15 +82,15 @@ public class Fenetre extends JFrame {
                     System.out.println("Si ça s'affiche voir avec Axel et ses exceptions bizarres !");
                 }
             }
+            this.actualiser();
         });
         timer.setRepeats(true);
-        timer.start();
-        */
     }
 
     
     public void barremenu(){
-        String[] choix = {"Joueur", "Facile"};
+
+        String[] choix = {"Joueur", "Bot Aléatoire", "Bot Axel", "Bot Lilian"};
         JButton valider = new JButton("Jouer");
         JComboBox blanc = new JComboBox(choix);
         JComboBox noir = new JComboBox(choix);
@@ -109,15 +108,21 @@ public class Fenetre extends JFrame {
                 case -1: System.out.println("Erreur menu déroulant blanc");break;
                 case 1: iablanc=null; break;
                 case 2: iablanc=new IntelligenceHasard(plateau); break;
+                case 3: iablanc=new IntelligenceDiff(plateau); break;
+                case 4: iablanc=new IntelligenceValuationMaxIA(plateau); break;
                 default: iablanc=null; break;
             }
             switch(getChoix(noir.getSelectedItem().toString(),choix)){
                 case -1: System.out.println("Erreur menu déroulant noir");break;
                 case 1: ianoir=null; break;
                 case 2: ianoir=new IntelligenceHasard(plateau); break;
+                case 3: ianoir=new IntelligenceDiff(plateau); break;
+                case 4: ianoir=new IntelligenceValuationMaxIA(plateau); break;
                 default: ianoir=null; break;
             }
             actualiser();
+            if (ianoir != null)
+                timer.start(); System.out.println("Here2");
             
         });
     }
@@ -135,6 +140,9 @@ public class Fenetre extends JFrame {
             if((plateau.tourBlanc()&& iablanc == null) || (!plateau.tourBlanc()&& ianoir == null)){
                 plateau.jouer(id);
                 actualiser();
+                if (!plateau.termine() && 
+                        (plateau.tourBlanc() && iablanc != null || !plateau.tourBlanc() && ianoir != null))
+                    timer.start();
             }
         }
     }
@@ -160,18 +168,6 @@ public class Fenetre extends JFrame {
         
         revalidate();
         repaint();
-        
-        // Truc pas beau qu'Axel n'aime pas
-        if (!plateau.termine()){
-            try {
-                if(plateau.tourBlanc()&& iablanc !=null)
-                    joueria(true);
-                else if(!plateau.tourBlanc()&& ianoir!=null)
-                    joueria(false);
-            } catch (NoFreeCaseException ex) {
-                Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
     
     public String scorefin(){
@@ -226,15 +222,16 @@ public class Fenetre extends JFrame {
             jouerpouria(iablanc.mouvement());
         else
             jouerpouria(ianoir.mouvement());
+        
+        if (plateau.termine() || 
+                        (plateau.tourBlanc() && iablanc == null || !plateau.tourBlanc() && ianoir == null))
+                    timer.stop();
     }
     
     public void jouerpouria(int id){
-        if (plateau.getDamier()[id].jouable()){
-            if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null)){
+        if (plateau.getDamier()[id].jouable())
+            if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null))
                 plateau.jouer(id);
-                actualiser();
-            }
-        }
     }
     
     public Plateau getPlateau(){
