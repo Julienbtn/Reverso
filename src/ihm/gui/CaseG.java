@@ -47,8 +47,8 @@ public class CaseG extends JPanel {
     }
         
     private void initCouleur(){
-            setBackground(new Color(153, 51, 0));
-            setForeground(new Color(102, 51, 0));
+            setBackground(new Color(0, 240, 0));
+            setForeground(new Color(150, 150, 150));
             
     }
     
