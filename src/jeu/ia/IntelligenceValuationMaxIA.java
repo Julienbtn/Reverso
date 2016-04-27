@@ -1,5 +1,6 @@
 package jeu.ia;
 
+import static java.lang.Math.abs;
 import java.util.ArrayList;
 import jeu.Plateau;
 
@@ -51,6 +52,28 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
         return score;
     }
     
+    public void coinPris(int angle){
+        // Si on prend un angle, on change la valeur des cases adjacentes,
+        // en prenant en priorité les cases sur le bord.
+        int valdiag =abs(valeurs[9]);
+        int valligne=abs(valeurs[1]);
+        if(angle==0){
+            valeurs[1]=valeurs[8]=valdiag;
+            valeurs[9]=valligne;
+        }
+        else if(angle==7){
+            valeurs[6]=valeurs[15]=valdiag;
+            valeurs[14]=valligne;
+        }
+        else if(angle==56){
+            valeurs[48]=valeurs[57]=valdiag;
+            valeurs[49]=valligne;
+        }
+        else if(angle==63){
+            valeurs[62]=valeurs[55]=valdiag;
+            valeurs[54]=valligne;
+        }
+    }
     
     @Override
     public int mouvement() throws NoFreeCaseException {
@@ -67,6 +90,12 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
                 meilleurCoup[1] = scoreIA;
                 meilleurCoup[0] = i;
             }
+        }
+        switch(jouables.get(meilleurCoup[0])){
+            case 0: coinPris(0);break;
+            case 7: coinPris(7);break;
+            case 56: coinPris(56);break;
+            case 63: coinPris(63);break;
         }
         return jouables.get(meilleurCoup[0]);
     }
