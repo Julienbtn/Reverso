@@ -91,7 +91,8 @@ public class Fenetre extends JFrame {
 
     
     public void barremenu(){
-        String[] choix = {"Joueur", "ia1", "ia2"};
+
+        String[] choix = {"Joueur", "Bot Aléatoire", "Bot Axel", "Bot Lilian"};
         JButton valider = new JButton("Jouer");
         JComboBox blanc = new JComboBox(choix);
         JComboBox noir = new JComboBox(choix);
@@ -109,14 +110,18 @@ public class Fenetre extends JFrame {
                 case -1: System.out.println("Erreur menu déroulant blanc");break;
                 case 1: iablanc=null; break;
                 case 2: iablanc=new IntelligenceHasard(plateau); break;
-                case 3: iablanc=new IntelligenceDiff(plateau, 7); break;
+                case 3: iablanc=new IntelligenceDiff(plateau); break;
+                case 4: iablanc=new IntelligenceValuationMaxIA(plateau); break;
+
                 default: iablanc=null; break;
             }
             switch(getChoix(noir.getSelectedItem().toString(),choix)){
                 case -1: System.out.println("Erreur menu déroulant noir");break;
                 case 1: ianoir=null; break;
                 case 2: ianoir=new IntelligenceHasard(plateau); break;
-                case 3: ianoir=new IntelligenceDiff(plateau, 5); break;
+                case 3: ianoir=new IntelligenceDiff(plateau); break;
+                case 4: ianoir=new IntelligenceValuationMaxIA(plateau); break;
+
                 default: ianoir=null; break;
             }
             actualiser();
@@ -185,6 +190,15 @@ public class Fenetre extends JFrame {
     
     public String scorefin(){
         String str;
+        JFrame victoire = new JFrame();
+        victoire.setSize(300, 260);
+        victoire.setLocationRelativeTo(this);
+        JLabel imageB = new JLabel( new ImageIcon( "VictoireB.jpg"));
+        JLabel imageN = new JLabel( new ImageIcon( "VictoireN.jpg"));
+        JLabel imageE = new JLabel( new ImageIcon( "Null.jpg"));
+        JLabel texte = new JLabel();
+        victoire.repaint();
+
             int res[] = new int[2];
             if(plateau.tourBlanc()){
                 res[0]=plateau.scoreBlanc();
@@ -197,14 +211,28 @@ public class Fenetre extends JFrame {
             if (res[1]>res[0]){
                 str = "Noir gagne ";
                 score[1]++;
+                texte.setText(str);
+                victoire.add(texte,BorderLayout.NORTH);
+                victoire.add(imageN,BorderLayout.CENTER);
+                victoire.setVisible(true);
+                victoire.setAlwaysOnTop(true);
+
             }
             else if (res[1]<res[0]){
                 str = "Blanc gagne ";
                 score[0]++;
+                victoire.add(new JLabel(str),BorderLayout.NORTH);
+                victoire.add(imageB,BorderLayout.CENTER);
+                victoire.setVisible(true);
+                victoire.setAlwaysOnTop(true);
             }
             else
                 str="Match nul ";
             str+=""+max(res[1],res[0])+" à "+min(res[1],res[0]);
+            victoire.add(new JLabel(str),BorderLayout.NORTH);
+                victoire.add(imageE,BorderLayout.CENTER);
+                victoire.setVisible(true);
+                victoire.setAlwaysOnTop(true);
         return str;
     }
 
@@ -220,18 +248,17 @@ public class Fenetre extends JFrame {
     }
     
     public void jouerpouria(int id){
-        if (plateau.getDamier()[id].jouable()){
+        if (plateau.getDamier()[id].jouable())
             if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null)){
                 plateau.jouer(id);
                 //actualiser();
                 
             }
-        }else
+        else
             System.out.println("Erreur mauvaise case");
     }
     
     public Plateau getPlateau(){
         return plateau;
     }
-
 }
