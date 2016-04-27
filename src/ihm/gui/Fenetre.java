@@ -119,7 +119,7 @@ public class Fenetre extends JFrame {
                 case -1: System.out.println("Erreur menu déroulant noir");break;
                 case 1: ianoir=null; break;
                 case 2: ianoir=new IntelligenceHasard(plateau); break;
-                case 3: ianoir=new IntelligenceDiff(plateau); break;
+                case 3: ianoir=new IntelligenceDiff(plateau,10); break;
                 case 4: ianoir=new IntelligenceValuationMaxIA(plateau); break;
 
                 default: ianoir=null; break;
