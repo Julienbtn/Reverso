@@ -35,8 +35,8 @@ public class Fenetre extends JFrame {
         score = new int[2]; score[0]=0; score[1]=0;
         
         this.setTitle("Reverso"); //titre
-        this.setSize(500,500); // taille de la fenetre (500x500)
-        this.setLocationRelativeTo(null); // position de la fenêtre sur l'écran ici on la centre 
+        this.setSize(500, 500); // taille de la fenetre (500x500)
+        this.setLocationRelativeTo(null); // centré 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //bouton croix activé (quitte le processus lorsqu'on appuye dessus            
         this.setResizable(true); // possibilité de modifier la taille de la fenêtre
         
@@ -70,7 +70,7 @@ public class Fenetre extends JFrame {
         
         
         // Implémentation du timer
-        timer = new Timer(1, (ActionEvent ae) -> {
+        timer = new Timer(10, (ActionEvent ae) -> {
             
             if (!this.plateau.termine()){
                 try {
@@ -120,7 +120,7 @@ public class Fenetre extends JFrame {
                 case 3: ianoir=new IntelligenceDiff(plateau); break;
                 case 4: ianoir=new IntelligenceValuationMaxIA(plateau); break;
                 case 5: ianoir=new IntelligenceFusion(plateau); break;
-                default: ianoir=null; break;
+                default: System.out.println("Erreur menu déroulant noir");ianoir=null; break;
             }
             actualiser();
             if (ianoir != null)
