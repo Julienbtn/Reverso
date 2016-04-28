@@ -90,7 +90,7 @@ public class Fenetre extends JFrame {
     // méthode qui crée la barre de menu placé en haut de la fenêtre 
     public void barremenu(){
 
-        String[] choix = {"Joueur", "Bot Aléatoire", "Bot Axel", "Bot Lilian"};
+        String[] choix = {"Joueur", "Bot Aléa", "Bot Axel", "Bot Lili", "Bot Fusion"};
         JButton valider = new JButton("Jouer");
         JComboBox blanc = new JComboBox(choix);
         JComboBox noir = new JComboBox(choix);
@@ -107,19 +107,19 @@ public class Fenetre extends JFrame {
                 victoire.dispose();
             this.plateau = new Jeu();
             switch(getChoix(blanc.getSelectedItem().toString(),choix)){
-                case -1: System.out.println("Erreur menu déroulant blanc");break;
                 case 1: iablanc=null; break;
                 case 2: iablanc=new IntelligenceHasard(plateau); break;
                 case 3: iablanc=new IntelligenceDiff(plateau); break;
                 case 4: iablanc=new IntelligenceValuationMaxIA(plateau); break;
-                default: iablanc=null; break;
+                case 5: iablanc=new IntelligenceFusion(plateau); break;
+                default: System.out.println("Erreur menu déroulant blanc");iablanc=null; break;
             }
             switch(getChoix(noir.getSelectedItem().toString(),choix)){
-                case -1: System.out.println("Erreur menu déroulant noir");break;
                 case 1: ianoir=null; break;
                 case 2: ianoir=new IntelligenceHasard(plateau); break;
                 case 3: ianoir=new IntelligenceDiff(plateau); break;
                 case 4: ianoir=new IntelligenceValuationMaxIA(plateau); break;
+                case 5: ianoir=new IntelligenceFusion(plateau); break;
                 default: ianoir=null; break;
             }
             actualiser();
