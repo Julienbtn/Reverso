@@ -6,11 +6,13 @@ public class CaseR implements Case{
     private boolean jouable;
     private Pion contenu;
     
+    // Constructeur case vide, de base non jouable et sans contenu
     public CaseR(){
         jouable = false;
         contenu = null;
     }
     
+    // Constructeur d'une case avec un pion
     public CaseR(boolean blanc){
         jouable = false;
         contenu = new Pion(blanc);
@@ -25,10 +27,7 @@ public class CaseR implements Case{
     }
     
     public boolean isVide(){
-        if(contenu ==null)
-            return true;
-        else
-            return false;
+        return contenu ==null;
     }
         
     public boolean isBlanc(){
@@ -39,6 +38,8 @@ public class CaseR implements Case{
         return (!isVide() && !contenu.isBlanc());
     }
     
+    // Renvoie vrai si la case appartient au joueur passé en argument,
+    // faux sinon (si elle est vide ou à l'adversaire)
     public boolean isBool(boolean joueur){
         if(joueur)
             return isBlanc();
@@ -50,6 +51,7 @@ public class CaseR implements Case{
         contenu = new Pion(blanc);
     }
     
+    // Copie la case
     public CaseR copieCase(){
         CaseR copie;
         if(contenu == null)
@@ -60,7 +62,7 @@ public class CaseR implements Case{
         return copie;
     }
     
-        
+    
     // Implémentation interface IA !
     
     public boolean remplie(){
