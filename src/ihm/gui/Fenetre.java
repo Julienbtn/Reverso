@@ -1,7 +1,8 @@
+// package de l'interface Homme-Machine gérant l'interface graphique
 package ihm.gui;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import java.util.logging.Level;
@@ -11,8 +12,8 @@ import jeu.*;
 import jeu.core.Jeu;
 import jeu.ia.*;
 
-
 public class Fenetre extends JFrame {
+    // définition des différents attributs
     private final JPanel container_nord;
     private final JPanel container_centre;
     private final JPanel container_sud;
@@ -25,7 +26,7 @@ public class Fenetre extends JFrame {
     
     private Timer timer;
 
-
+    // Constructeur de la fenêtre avec un plateau passé en paramètre
     public Fenetre(Plateau plateau){
 
         this.plateau = plateau;
@@ -34,11 +35,12 @@ public class Fenetre extends JFrame {
         score = new int[2]; score[0]=0; score[1]=0;
         
         this.setTitle("Reverso"); //titre
-        this.setSize(500, 500); // taille de la fenetre (500x500)
-        this.setLocationRelativeTo(null); // centré 
+        this.setSize(500,500); // taille de la fenetre (500x500)
+        this.setLocationRelativeTo(null); // position de la fenêtre sur l'écran ici on la centre 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //bouton croix activé (quitte le processus lorsqu'on appuye dessus            
         this.setResizable(true); // possibilité de modifier la taille de la fenêtre
         
+        // Définition des différents containers de la fenêtre 
         container_nord = new JPanel();
         container_centre = new JPanel();
         container_sud = new JPanel();
@@ -50,7 +52,6 @@ public class Fenetre extends JFrame {
         GridLayout grille = new GridLayout(8,8);
         container_centre.setLayout(grille);
         
-
         for (int i = 0; i<64; i++)
         {
             CaseG caseA = new CaseG(plateau.getDamier()[i]);
@@ -59,6 +60,7 @@ public class Fenetre extends JFrame {
         }
         container_centre.repaint();
         
+        // On place les différents container dans la fenêtre 
         this.getContentPane().add(container_nord,BorderLayout.NORTH);
         this.getContentPane().add(container_centre,BorderLayout.CENTER);
         this.getContentPane().add(container_sud,BorderLayout.SOUTH);
@@ -67,7 +69,7 @@ public class Fenetre extends JFrame {
         this.setVisible(true); // rend visible la fenêtre
         
         
-        // Timer d'update
+        // Implémentation du timer
         timer = new Timer(1, (ActionEvent ae) -> {
             
             if (!this.plateau.termine()){
@@ -78,7 +80,6 @@ public class Fenetre extends JFrame {
                         this.joueria(false);
                 } catch (NoFreeCaseException ex) {
                     Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
-                    System.out.println("Si ça s'affiche voir avec Axel et ses exceptions bizarres !");
                 }
             }
             this.actualiser();
@@ -86,7 +87,7 @@ public class Fenetre extends JFrame {
         timer.setRepeats(true);
     }
 
-    
+    // méthode qui crée la barre de menu placé en haut de la fenêtre 
     public void barremenu(){
 
         String[] choix = {"Joueur", "Bot Aléatoire", "Bot Axel", "Bot Lilian"};
@@ -127,6 +128,7 @@ public class Fenetre extends JFrame {
         });
     }
     
+    // fonction qui retourne le choix de l'utilisateur
     public int getChoix(String str, String[] tab){
         for(int i=0;i<tab.length;i++)
             if(str.equals(tab[i]))
@@ -134,7 +136,7 @@ public class Fenetre extends JFrame {
         return -1;
     }
 
-
+    // méthode qui permet de jouer sur la case cliquée
     public void clicCase(int id){
         if (plateau.getDamier()[id].jouable()){
             if((plateau.tourBlanc()&& iablanc == null) || (!plateau.tourBlanc()&& ianoir == null)){
@@ -147,6 +149,7 @@ public class Fenetre extends JFrame {
         }
     }
 
+    // méthode qui actualise la fenêtre
     public void actualiser(){
         String str;
         Component[] cases = container_centre.getComponents();
@@ -154,7 +157,6 @@ public class Fenetre extends JFrame {
             boolean ia = (plateau.tourBlanc() && iablanc!=null) || (!plateau.tourBlanc() && ianoir!=null);
             ((CaseG) cases[i]).update(plateau.getDamier()[i],plateau.tourBlanc(),ia);
         }
-        
         container_sud.removeAll();
         if(plateau.termine()){
             str=scorefin();}
@@ -170,6 +172,7 @@ public class Fenetre extends JFrame {
         repaint();
     }
     
+    // Méthode qui affiche le score final en bas et qui lance une popup avec une image en fonction du joueur gagnant
     public String scorefin(){
         String str;
         victoire = new JFrame();
@@ -206,23 +209,25 @@ public class Fenetre extends JFrame {
         return str;
     }
 
+    // méthode qui permet si c'est au tour de l'ia de jouer en appelant la méthode suivante
     public void joueria(boolean blanc) throws NoFreeCaseException{
         if (blanc)
             jouerpouria(iablanc.mouvement());
         else
             jouerpouria(ianoir.mouvement());
-        
         if (plateau.termine() || 
                         (plateau.tourBlanc() && iablanc == null || !plateau.tourBlanc() && ianoir == null))
                     timer.stop();
     }
     
+    // méthode qui permet à l'ia de jouer 
     public void jouerpouria(int id){
         if (plateau.getDamier()[id].jouable())
             if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null))
                 plateau.jouer(id);
     }
     
+    // fonction qui retourne le plateu de la fenêtre 
     public Plateau getPlateau(){
         return plateau;
     }
