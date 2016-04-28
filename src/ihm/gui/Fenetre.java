@@ -69,7 +69,7 @@ public class Fenetre extends JFrame {
         
         
         // Timer d'update
-        timer = new Timer(100, (ActionEvent ae) -> {
+        timer = new Timer(10, (ActionEvent ae) -> {
             
             if (!this.plateau.termine()){
                 try {
@@ -110,7 +110,7 @@ public class Fenetre extends JFrame {
                 case -1: System.out.println("Erreur menu déroulant blanc");break;
                 case 1: iablanc=null; break;
                 case 2: iablanc=new IntelligenceHasard(plateau); break;
-                case 3: iablanc=new IntelligenceDiff(plateau); break;
+                case 3: iablanc=new IntelligenceDiff(plateau, 4); break;
                 case 4: iablanc=new IntelligenceValuationMaxIA(plateau); break;
 
                 default: iablanc=null; break;
@@ -119,7 +119,7 @@ public class Fenetre extends JFrame {
                 case -1: System.out.println("Erreur menu déroulant noir");break;
                 case 1: ianoir=null; break;
                 case 2: ianoir=new IntelligenceHasard(plateau); break;
-                case 3: ianoir=new IntelligenceDiff(plateau,10); break;
+                case 3: ianoir=new IntelligenceDiff(plateau,4); break;
                 case 4: ianoir=new IntelligenceValuationMaxIA(plateau); break;
 
                 default: ianoir=null; break;
