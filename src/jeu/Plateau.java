@@ -1,23 +1,33 @@
 package jeu;
 
-import java.util.ArrayList;
-import jeu.core.TableauCase;
-
 public interface Plateau {
+    // Renvoie copie du plateau
+    public Plateau copie();
     
-    public Plateau copie();                 // Renvoie copie du plateau
+     // Tableau contenant les cases du tableau (ligne par ligne)
+    public Case[] getDamier();
+    
+    // Tente de jouer à la case indiquée, lance une exception si impossible
+    public void jouer(int idCase);
 
-    public Case[] getDamier();              // Tableau contenant les cases du tableau (ligne par ligne)
-    public void jouer(int idCase);          // Tente de jouer à la case indiquée
-                                            // Lance une exception si impossible
+    // Retourne true si c'est au joueur blanc de jouer
+    public boolean tourBlanc();
     
+    // Retourne true si un joueur vient de passer son tour
+    public boolean passe();
     
-    public boolean tourBlanc();             // Retourne true si c'est au joueur blanc de jouer
-    public boolean passe();                 // Retourne true si un joueur vient de passer son tour
+    // Retourne le score actuel des blancs
+    public int scoreBlanc();
     
-    public int scoreBlanc();                // Retourne le score actuel des blancs
-    public int scoreNoir();                 // Retourne le score actuel des noirs
+    // Retourne le score actuel des noirs
+    public int scoreNoir();
     
-    public boolean victoireBlanc();         // Renvoie true si le joueur blanc a gagné
-    public boolean termine();               // Renvoie true si jeu terminé
+    // Renvoie true si le joueur blanc a gagné
+    public boolean victoireBlanc();
+    
+    // Renvoie true si jeu terminé
+    public boolean termine();
+    
+    // Renvoie le nombre de cases vides
+    public int nbCasesLibres();
 }

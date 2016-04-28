@@ -16,6 +16,7 @@ public class Fenetre extends JFrame {
     private final JPanel container_nord;
     private final JPanel container_centre;
     private final JPanel container_sud;
+    private JFrame victoire;
 
     private Plateau plateau;
     private int[] score;
@@ -37,13 +38,11 @@ public class Fenetre extends JFrame {
         this.setLocationRelativeTo(null); // centré 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //bouton croix activé (quitte le processus lorsqu'on appuye dessus            
         this.setResizable(true); // possibilité de modifier la taille de la fenêtre
-        //this.setAlwaysOnTop(true); // la fenêtre reste devant
+        
         container_nord = new JPanel();
         container_centre = new JPanel();
         container_sud = new JPanel();
         
-        
-
         //Haut de la fenêtre
         barremenu();
         
@@ -85,8 +84,6 @@ public class Fenetre extends JFrame {
             this.actualiser();
         });
         timer.setRepeats(true);
-        // timer.start();
-        
     }
 
     
@@ -105,29 +102,28 @@ public class Fenetre extends JFrame {
         container_nord.add(new JLabel("   "));
         container_nord.add(valider);
         valider.addActionListener((ActionEvent e) -> {
+            if (victoire != null)
+                victoire.dispose();
             this.plateau = new Jeu();
             switch(getChoix(blanc.getSelectedItem().toString(),choix)){
                 case -1: System.out.println("Erreur menu déroulant blanc");break;
                 case 1: iablanc=null; break;
                 case 2: iablanc=new IntelligenceHasard(plateau); break;
-                case 3: iablanc=new IntelligenceDiff(plateau, 4); break;
+                case 3: iablanc=new IntelligenceDiff(plateau); break;
                 case 4: iablanc=new IntelligenceValuationMaxIA(plateau); break;
-
                 default: iablanc=null; break;
             }
             switch(getChoix(noir.getSelectedItem().toString(),choix)){
                 case -1: System.out.println("Erreur menu déroulant noir");break;
                 case 1: ianoir=null; break;
                 case 2: ianoir=new IntelligenceHasard(plateau); break;
-                case 3: ianoir=new IntelligenceDiff(plateau,4); break;
+                case 3: ianoir=new IntelligenceDiff(plateau); break;
                 case 4: ianoir=new IntelligenceValuationMaxIA(plateau); break;
-
                 default: ianoir=null; break;
             }
             actualiser();
             if (ianoir != null)
-                timer.start(); System.out.println("Here2");
-            
+                timer.start();
         });
     }
     
@@ -172,67 +168,41 @@ public class Fenetre extends JFrame {
         
         revalidate();
         repaint();
-        
-        // Truc pas beau qu'Axel n'aime pas
-        /* J'aime pas
-        if (!plateau.termine()){
-            try {
-                if(plateau.tourBlanc()&& iablanc !=null)
-                    joueria(true);
-                else if(!plateau.tourBlanc()&& ianoir!=null)
-                    joueria(false);
-            } catch (NoFreeCaseException ex) {
-                Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-                */
     }
     
     public String scorefin(){
         String str;
-        JFrame victoire = new JFrame();
-        victoire.setSize(300, 260);
+        victoire = new JFrame();
+        victoire.setSize(220, 255);
         victoire.setLocationRelativeTo(this);
-        JLabel imageB = new JLabel( new ImageIcon( "VictoireB.jpg"));
-        JLabel imageN = new JLabel( new ImageIcon( "VictoireN.jpg"));
-        JLabel imageE = new JLabel( new ImageIcon( "Null.jpg"));
-        JLabel texte = new JLabel();
-        victoire.repaint();
-
-            int res[] = new int[2];
-            if(plateau.tourBlanc()){
-                res[0]=plateau.scoreBlanc();
-                res[1]=64-res[0];
-            }
-            else{
-                res[1]=plateau.scoreNoir();
-                res[0]=64-res[1];
-            }
-            if (res[1]>res[0]){
-                str = "Noir gagne ";
-                score[1]++;
-                texte.setText(str);
-                victoire.add(texte,BorderLayout.NORTH);
-                victoire.add(imageN,BorderLayout.CENTER);
-                victoire.setVisible(true);
-                victoire.setAlwaysOnTop(true);
-
-            }
-            else if (res[1]<res[0]){
-                str = "Blanc gagne ";
-                score[0]++;
-                victoire.add(new JLabel(str),BorderLayout.NORTH);
-                victoire.add(imageB,BorderLayout.CENTER);
-                victoire.setVisible(true);
-                victoire.setAlwaysOnTop(true);
-            }
-            else
-                str="Match nul ";
-            str+=""+max(res[1],res[0])+" à "+min(res[1],res[0]);
-            victoire.add(new JLabel(str),BorderLayout.NORTH);
-                victoire.add(imageE,BorderLayout.CENTER);
-                victoire.setVisible(true);
-                victoire.setAlwaysOnTop(true);
+        victoire.setVisible(true);
+        int res[] = new int[2];
+        if(plateau.tourBlanc()){
+            res[0]=plateau.scoreBlanc();
+            res[1]=64-res[0];
+        }
+        else{
+            res[1]=plateau.scoreNoir();
+            res[0]=64-res[1];
+        }
+        if (res[1]>res[0]){
+            str = "Noir gagne ";
+            score[1]++;
+            victoire.add(new JLabel( new ImageIcon("VictoireN.jpg")));
+        }
+        else if (res[1]<res[0]){
+            str = "Blanc gagne ";
+            score[0]++;
+            victoire.add(new JLabel( new ImageIcon("VictoireB.jpg")));
+        }
+        else{
+            str="Match nul ";
+            victoire.add(new JLabel( new ImageIcon("Null.jpg")));
+        }
+        str+=""+max(res[1],res[0])+" à "+min(res[1],res[0]);
+        JLabel textFin = new JLabel(str);
+        textFin.setHorizontalAlignment(SwingConstants.CENTER);
+        victoire.add(textFin,BorderLayout.NORTH);
         return str;
     }
 
@@ -249,16 +219,13 @@ public class Fenetre extends JFrame {
     
     public void jouerpouria(int id){
         if (plateau.getDamier()[id].jouable())
-            if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null)){
+            if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null))
                 plateau.jouer(id);
-                //actualiser();
-                
-            }
-        else
-            System.out.println("Erreur mauvaise case");
     }
     
     public Plateau getPlateau(){
         return plateau;
     }
+
 }
+
