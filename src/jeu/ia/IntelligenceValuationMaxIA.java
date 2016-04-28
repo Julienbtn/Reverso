@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import jeu.Plateau;
 
 public class IntelligenceValuationMaxIA extends IntelligenceBase{
+    // Grille de valeur des cases
     private int[] valeurs;
     
     public IntelligenceValuationMaxIA(Plateau plate) {
@@ -12,6 +13,7 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
         valeurs = creerGrille();
     }
     
+    // Constructeur de la grille
     public int[] creerGrille(){
         int[] grille = new int[64];
         // On crée un patron correspondant au coin supérieur gauche
@@ -43,6 +45,8 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
         return grille;
     }
     
+    // Calcul les points qu'à l'IA sur un plateau
+    // Si il y a 4 cases libres ou moints, on calcule le nombre de pions
     public int calculerPoints(Plateau plate,boolean blanc){
         int score = 0;
         if(plate.nbCasesLibres()>4){
@@ -57,6 +61,7 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
         return score;
     }
     
+    // Si un angle est pris, on change les valeurs des cases adjacentes
     public void coinPris(int angle){
         // Si on prend un angle, on change la valeur des cases adjacentes,
         // en prenant en priorité les cases sur le bord.
@@ -80,6 +85,7 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
         }
     }
     
+    // L'ia renvoie la case sur laquelle elle va jouer
     @Override
     public int mouvement() throws NoFreeCaseException {
         Plateau copie;
@@ -96,6 +102,7 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
                 meilleurCoup[0] = i;
             }
         }
+        // Si elle joue sur un angle on met à jour les valeurs des cases
         switch(jouables.get(meilleurCoup[0])){
             case 0: coinPris(0);break;
             case 7: coinPris(7);break;
