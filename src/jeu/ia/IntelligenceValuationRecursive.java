@@ -62,26 +62,20 @@ public class IntelligenceValuationRecursive extends IntelligenceBase{
         // devient abs(case diag) et inversement
         int valdiag =abs(valeurs[9]);
         int valligne=abs(valeurs[1]);
-        // Si ce n'est pas les 2 derniers coups on regarde la grille
-        if(plate.nbCasesLibres()>3){
-            for(int i= 0;i<64;i++){
-                if(possedeCase(plate.getDamier()[i],blanc)){
-                     switch(i){
-                        case 1:case 8:score+=(hautgauche?valdiag:valeurs[i]);break;
-                        case 9:score+=(hautgauche?valligne:valeurs[i]);break;
-                        case 6:case 15:score+=(hautdroit?valdiag:valeurs[i]);break;
-                        case 14:score+=(hautdroit?valligne:valeurs[i]);break;
-                        case 48:case 57:score+=(basgauche?valdiag:valeurs[i]);break;
-                        case 49:score+=(basgauche?valligne:valeurs[i]);break;
-                        case 55:case 62:score+=(basdroit?valdiag:valeurs[i]);break;
-                        case 54:score+=(basdroit?valligne:valeurs[i]);break;
-                        default:score+=valeurs[i];break;
-                    }
+        for(int i= 0;i<64;i++){
+            if(possedeCase(plate.getDamier()[i],blanc)){
+                 switch(i){
+                    case 1:case 8:score+=(hautgauche?valdiag:valeurs[i]);break;
+                    case 9:score+=(hautgauche?valligne:valeurs[i]);break;
+                    case 6:case 15:score+=(hautdroit?valdiag:valeurs[i]);break;
+                    case 14:score+=(hautdroit?valligne:valeurs[i]);break;
+                    case 48:case 57:score+=(basgauche?valdiag:valeurs[i]);break;
+                    case 49:score+=(basgauche?valligne:valeurs[i]);break;
+                    case 55:case 62:score+=(basdroit?valdiag:valeurs[i]);break;
+                    case 54:score+=(basdroit?valligne:valeurs[i]);break;
+                    default:score+=valeurs[i];break;
                 }
             }
-        }
-        else { //Sinon on compte les pions
-            score = (blanc?plate.scoreBlanc():plate.scoreNoir());
         }
         return score;
     }
@@ -91,84 +85,57 @@ public class IntelligenceValuationRecursive extends IntelligenceBase{
         return c.remplie() && c.blanche()==joueur;
     }
     
-    public int[] mouvementRecu(Plateau p,int recu) throws NoFreeCaseException{
-        Random rnd = new Random();
-        Plateau copie;
-        ArrayList<Integer> jouables= casesJouables(p);
-        ArrayList<int[]> listeBest = new ArrayList<>();
-        // On enregistre tous les meilleurs coups dans un tableau pour
-        // en retourner un au hasard
-        // ATTENTION : On stock des pointeurs, donc si on modifie et
-        // ajoute la variable best à chaque fois chaque case aura la
-        // même valeur
-        int[] best = {-1,plateau.tourBlanc()==p.tourBlanc()?-99999:99999};
-        int score;
-        for(int i=0;i<jouables.size();i++){
-            // On simule un coup et on calcule les points DE L'IA
-            copie = simuler(p, jouables.get(i));
-            score = calculerPoints(copie, plateau.tourBlanc());
-            if(plateau.tourBlanc()==p.tourBlanc()){ // Tour IA
-                // On recherche notre score maximum
-                if (recu < 1){
-                    if (score > best[1]){
-                        best[0]=jouables.get(i);
-                        best[1] = score;
-                        listeBest.clear();
-                        listeBest.add(best);
-                    }
-                    else if(score==best[1]){
-                        listeBest.add(new int[] {jouables.get(i),score});
-                    }
-                }
-                else if (!copie.termine()){
-                    score = mouvementRecu(copie, recu -1)[0];
-                    if (score > best[1]){
-                        best[0]=jouables.get(i);
-                        best[1] = score;
-                        listeBest.clear();
-                        listeBest.add(best);
-                    }
-                    else if(score==best[1]){
-                        listeBest.add(new int[] {jouables.get(i),score});
-                    }
-                }
-                else return mouvementRecu(p, 0);
-            }
-            else{ // Tour joueur
-                // Le joueur va minimiser notre score
-                // (en vrai il va maximiser le sien en prenant un angle par exemple)
-                if (recu < 1){
-                    if (score < best[1]){
-                        best[0]=jouables.get(i);
-                        best[1] = score;
-                        listeBest.clear();
-                        listeBest.add(best);
-                    }
-                    else if(score==best[1]){
-                        listeBest.add(new int[] {jouables.get(i),score});
-                    }
-                }
-                else if (!copie.termine()){
-                    score = mouvementRecu(copie, recu -1)[0];
-                    if (score < best[1]){
-                        best[0]=jouables.get(i);
-                        best[1] = score;
-                        listeBest.clear();
-                        listeBest.add(best);
-                    }
-                    else if(score==best[1]){
-                        listeBest.add(new int[] {jouables.get(i),score});
-                    }
-                }
-                else return mouvementRecu(p, 0);
-            }
-        }
-        return listeBest.get(rnd.nextInt(listeBest.size()));
-    }
-        
-    // L'ia renvoie la case sur laquelle elle va jouer
     @Override
     public int mouvement() throws NoFreeCaseException {
-        return mouvementRecu(plateau, prof)[0];
+        int maxval=-65000;
+        Random rnd  = new Random();
+        Plateau copie;
+        int val;
+        ArrayList<Integer> positionsMeilleurCoup = new ArrayList<>();
+        ArrayList<Integer> jouables= casesJouables();
+        for(int i=0;i<jouables.size();i++){
+            copie =simuler(plateau, jouables.get(i));
+            val=iaMin(copie,prof);
+            if(val==maxval)
+                positionsMeilleurCoup.add(jouables.get(i));
+            else if(val>maxval){
+                maxval = val;
+                positionsMeilleurCoup.clear();
+                positionsMeilleurCoup.add(jouables.get(i));
+            }
+        }
+        return positionsMeilleurCoup.get(rnd.nextInt(positionsMeilleurCoup.size()));
+    }
+    
+    public int iaMin(Plateau plate, int prof) throws NoFreeCaseException{
+        if(prof<1||plate.termine())
+            return calculerPoints(plate, plateau.tourBlanc());
+        int minval=65000;
+        Plateau copie;
+        int val;
+        ArrayList<Integer> jouables= casesJouables(plate);
+        for(int i=0;i<jouables.size();i++){
+            copie =simuler(plate, jouables.get(i));
+            val=iaMax(copie,prof-1);
+            if(val<minval)
+                minval=val;
+        }
+        return minval;
+    }
+    
+    public int iaMax(Plateau plate, int prof) throws NoFreeCaseException{
+        if(prof<1||plate.termine())
+            return calculerPoints(plate, plateau.tourBlanc());
+        int maxval=-65;
+        Plateau copie;
+        int val;
+        ArrayList<Integer> jouables= casesJouables(plate);
+        for(int i=0;i<jouables.size();i++){
+            copie =simuler(plate, jouables.get(i));
+            val=iaMin(copie,prof-1);
+            if(val>maxval)
+                maxval=val;
+        }
+        return maxval;
     }
 }

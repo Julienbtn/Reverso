@@ -90,7 +90,8 @@ public class Fenetre extends JFrame {
     // méthode qui crée la barre de menu placé en haut de la fenêtre 
     public void barremenu(){
 
-        String[] choix = {"Joueur", "Bot Aléa", "Bot Axel", "Bot Lili", "Bot Test"};
+        String[] choix = {"Joueur","Aléatoire","Axel(?)","Valuation","MinMax",
+            "Fusion","ValuationRecursive"};
         JButton valider = new JButton("Jouer");
         JComboBox blanc = new JComboBox(choix);
         JComboBox noir = new JComboBox(choix);
@@ -126,8 +127,10 @@ public class Fenetre extends JFrame {
             case 1: return null;
             case 2: return new IntelligenceHasard(plateau);
             case 3: return new IntelligenceDiff(plateau);
-            case 4: return new IntelligenceValuationMaxIA(plateau);
-            case 5: return new IntelligenceMinMax(plateau,2);
+            case 4: return new IntelligenceValuation(plateau);
+            case 5: return new IntelligenceMinMax(plateau,4);
+            case 6: return new IntelligenceFusion(plateau,3);
+            case 7: return new IntelligenceValuationRecursive(plateau,3);
             default: System.out.println("Erreur choix ia");return null;
         }
     }

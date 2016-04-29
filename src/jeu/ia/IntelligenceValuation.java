@@ -6,11 +6,11 @@ import java.util.Random;
 import jeu.Case;
 import jeu.Plateau;
 
-public class IntelligenceValuationMaxIA extends IntelligenceBase{
+public class IntelligenceValuation extends IntelligenceBase{
     // Grille de valeur des cases
     private int[] valeurs;
     
-    public IntelligenceValuationMaxIA(Plateau plate) {
+    public IntelligenceValuation(Plateau plate) {
         super(plate);
         valeurs = creerGrille();
     }
