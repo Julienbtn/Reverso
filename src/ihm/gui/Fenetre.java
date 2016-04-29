@@ -96,13 +96,20 @@ public class Fenetre extends JFrame {
         JComboBox noir = new JComboBox(choix);
         blanc.setPreferredSize(new Dimension(100, 20));
         noir.setPreferredSize(new Dimension(100, 20));
-        container_nord.add(new JLabel("   Blanc :"));
+        JCheckBox reini = new JCheckBox("Réini");
+        container_nord.add(new JLabel("Blanc :"));
         container_nord.add(blanc);
-        container_nord.add(new JLabel("   Noir :"));
+        container_nord.add(new JLabel(" Noir :"));
         container_nord.add(noir);
-        container_nord.add(new JLabel("   "));
+        container_nord.add(new JLabel(" "));
+        container_nord.add(reini);
+        container_nord.add(new JLabel(" "));
         container_nord.add(valider);
         valider.addActionListener((ActionEvent e) -> {
+            if (reini.isSelected()){
+                reini.setSelected(false);
+                score[0]=score[1]=0;
+            }
             if (victoire != null)
                 victoire.dispose();
             this.plateau = new Jeu();
@@ -120,7 +127,7 @@ public class Fenetre extends JFrame {
             case 2: return new IntelligenceHasard(plateau);
             case 3: return new IntelligenceDiff(plateau);
             case 4: return new IntelligenceValuationMaxIA(plateau);
-            case 5: return new IntelligenceValuationMaxIA(plateau);
+            case 5: return new IntelligenceMinMax(plateau,2);
             default: System.out.println("Erreur choix ia");return null;
         }
     }
