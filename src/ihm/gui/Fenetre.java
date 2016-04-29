@@ -219,7 +219,6 @@ public class Fenetre extends JFrame {
     
     // méthode qui permet à l'ia de jouer 
     public void jouerpouria(int id){
-        System.out.println("Tentative de jeu case "+id);
         if (plateau.getDamier()[id].jouable())
             if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null))
                 plateau.jouer(id);
