@@ -120,7 +120,7 @@ public class Fenetre extends JFrame {
             case 2: return new IntelligenceHasard(plateau);
             case 3: return new IntelligenceDiff(plateau);
             case 4: return new IntelligenceValuationMaxIA(plateau);
-            case 5: return new IntelligenceDiff(plateau,2);
+            case 5: return new IntelligenceValuationMaxIA(plateau);
             default: System.out.println("Erreur choix ia");return null;
         }
     }

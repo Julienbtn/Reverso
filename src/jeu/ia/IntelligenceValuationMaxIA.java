@@ -60,26 +60,20 @@ public class IntelligenceValuationMaxIA extends IntelligenceBase{
         // devient abs(case diag) et inversement
         int valdiag =abs(valeurs[9]);
         int valligne=abs(valeurs[1]);
-        // Si ce n'est pas les 2 derniers coups on regarde la grille
-        if(plate.nbCasesLibres()>3){
-            for(int i= 0;i<64;i++){
-                if(possedeCase(plate.getDamier()[i],blanc)){
-                     switch(i){
-                        case 1:case 8:score+=(hautgauche?valdiag:valeurs[i]);break;
-                        case 9:score+=(hautgauche?valligne:valeurs[i]);break;
-                        case 6:case 15:score+=(hautdroit?valdiag:valeurs[i]);break;
-                        case 14:score+=(hautdroit?valligne:valeurs[i]);break;
-                        case 48:case 57:score+=(basgauche?valdiag:valeurs[i]);break;
-                        case 49:score+=(basgauche?valligne:valeurs[i]);break;
-                        case 55:case 62:score+=(basdroit?valdiag:valeurs[i]);break;
-                        case 54:score+=(basdroit?valligne:valeurs[i]);break;
-                        default:score+=valeurs[i];break;
-                    }
+        for(int i= 0;i<64;i++){
+            if(possedeCase(plate.getDamier()[i],blanc)){
+                 switch(i){
+                    case 1:case 8:score+=(hautgauche?valdiag:valeurs[i]);break;
+                    case 9:score+=(hautgauche?valligne:valeurs[i]);break;
+                    case 6:case 15:score+=(hautdroit?valdiag:valeurs[i]);break;
+                    case 14:score+=(hautdroit?valligne:valeurs[i]);break;
+                    case 48:case 57:score+=(basgauche?valdiag:valeurs[i]);break;
+                    case 49:score+=(basgauche?valligne:valeurs[i]);break;
+                    case 55:case 62:score+=(basdroit?valdiag:valeurs[i]);break;
+                    case 54:score+=(basdroit?valligne:valeurs[i]);break;
+                    default:score+=valeurs[i];break;
                 }
             }
-        }
-        else { //Sinon on compte les pions
-            score = (blanc?plate.scoreBlanc():plate.scoreNoir());
         }
         return score;
     }
