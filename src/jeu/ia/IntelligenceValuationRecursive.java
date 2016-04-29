@@ -101,40 +101,66 @@ public class IntelligenceValuationRecursive extends IntelligenceBase{
         // ATTENTION : On stock des pointeurs, donc si on modifie et
         // ajoute la variable best à chaque fois chaque case aura la
         // même valeur
-        int[] best = {-1,-99999};
-        if(recu>=1)
-            best[1] = 99999;
+        int[] best = {-1,plateau.tourBlanc()==p.tourBlanc()?-99999:99999};
         int score;
         for(int i=0;i<jouables.size();i++){
-            // On simule un coup et on calcule 
-            // les points DU JOUEUR POUR QUI ON SIMULE
+            // On simule un coup et on calcule les points DE L'IA
             copie = simuler(p, jouables.get(i));
-            score = calculerPoints(copie, p.tourBlanc());
-            // Si la récu est fini, ça simule le plus gros score
-            if (recu < 1){
-                if (score > best[1]){
-                    best[0]=jouables.get(i);
-                    best[1] = score;
-                    listeBest.clear();
-                    listeBest.add(best);
+            score = calculerPoints(copie, plateau.tourBlanc());
+            if(plateau.tourBlanc()==p.tourBlanc()){ // Tour IA
+                // On recherche notre score maximum
+                if (recu < 1){
+                    if (score > best[1]){
+                        best[0]=jouables.get(i);
+                        best[1] = score;
+                        listeBest.clear();
+                        listeBest.add(best);
+                    }
+                    else if(score==best[1]){
+                        listeBest.add(new int[] {jouables.get(i),score});
+                    }
                 }
-                else if(score==best[1]){
-                    listeBest.add(new int[] {jouables.get(i),score});
+                else if (!copie.termine()){
+                    score = mouvementRecu(copie, recu -1)[0];
+                    if (score > best[1]){
+                        best[0]=jouables.get(i);
+                        best[1] = score;
+                        listeBest.clear();
+                        listeBest.add(best);
+                    }
+                    else if(score==best[1]){
+                        listeBest.add(new int[] {jouables.get(i),score});
+                    }
                 }
+                else return mouvementRecu(p, 0);
             }
-            // Sinon on essaye de donner le plus petit score à l'adversaire
-            // (qui joue exactement comme nous)
-            else{
-                score = mouvementRecu(copie, recu -1)[0];
-                if (score < best[1]){
-                    best[0]=jouables.get(i);
-                    best[1] = score;
-                    listeBest.clear();
-                    listeBest.add(best);
+            else{ // Tour joueur
+                // Le joueur va minimiser notre score
+                // (en vrai il va maximiser le sien en prenant un angle par exemple)
+                if (recu < 1){
+                    if (score < best[1]){
+                        best[0]=jouables.get(i);
+                        best[1] = score;
+                        listeBest.clear();
+                        listeBest.add(best);
+                    }
+                    else if(score==best[1]){
+                        listeBest.add(new int[] {jouables.get(i),score});
+                    }
                 }
-                else if(score==best[1]){
-                    listeBest.add(new int[] {jouables.get(i),score});
+                else if (!copie.termine()){
+                    score = mouvementRecu(copie, recu -1)[0];
+                    if (score < best[1]){
+                        best[0]=jouables.get(i);
+                        best[1] = score;
+                        listeBest.clear();
+                        listeBest.add(best);
+                    }
+                    else if(score==best[1]){
+                        listeBest.add(new int[] {jouables.get(i),score});
+                    }
                 }
+                else return mouvementRecu(p, 0);
             }
         }
         return listeBest.get(rnd.nextInt(listeBest.size()));

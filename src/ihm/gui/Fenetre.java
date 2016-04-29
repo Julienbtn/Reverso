@@ -90,7 +90,7 @@ public class Fenetre extends JFrame {
     // méthode qui crée la barre de menu placé en haut de la fenêtre 
     public void barremenu(){
 
-        String[] choix = {"Joueur", "Bot Aléa", "Bot Axel", "Bot Lili", "Bot Fusion"};
+        String[] choix = {"Joueur", "Bot Aléa", "Bot Axel", "Bot Lili", "Bot Test"};
         JButton valider = new JButton("Jouer");
         JComboBox blanc = new JComboBox(choix);
         JComboBox noir = new JComboBox(choix);
@@ -106,26 +106,23 @@ public class Fenetre extends JFrame {
             if (victoire != null)
                 victoire.dispose();
             this.plateau = new Jeu();
-            switch(getChoix(blanc.getSelectedItem().toString(),choix)){
-                case 1: iablanc=null; break;
-                case 2: iablanc=new IntelligenceHasard(plateau); break;
-                case 3: iablanc=new IntelligenceDiff(plateau); break;
-                case 4: iablanc=new IntelligenceValuationMaxIA(plateau); break;
-                case 5: iablanc=new IntelligenceFusion(plateau); break;
-                default: System.out.println("Erreur menu déroulant blanc");iablanc=null; break;
-            }
-            switch(getChoix(noir.getSelectedItem().toString(),choix)){
-                case 1: ianoir=null; break;
-                case 2: ianoir=new IntelligenceHasard(plateau); break;
-                case 3: ianoir=new IntelligenceDiff(plateau); break;
-                case 4: ianoir=new IntelligenceValuationMaxIA(plateau); break;
-                case 5: ianoir=new IntelligenceFusion(plateau); break;
-                default: System.out.println("Erreur menu déroulant noir");ianoir=null; break;
-            }
+            iablanc = choixMenu(getChoix(blanc.getSelectedItem().toString(),choix));
+            ianoir = choixMenu(getChoix(noir.getSelectedItem().toString(),choix));
             actualiser();
             if (ianoir != null)
                 timer.start();
         });
+    }
+    
+    public IntelligenceBase choixMenu(int choix){
+        switch(choix){
+            case 1: return null;
+            case 2: return new IntelligenceHasard(plateau);
+            case 3: return new IntelligenceDiff(plateau);
+            case 4: return new IntelligenceValuationMaxIA(plateau);
+            case 5: return new IntelligenceDiff(plateau,2);
+            default: System.out.println("Erreur choix ia");return null;
+        }
     }
     
     // fonction qui retourne le choix de l'utilisateur
@@ -222,6 +219,7 @@ public class Fenetre extends JFrame {
     
     // méthode qui permet à l'ia de jouer 
     public void jouerpouria(int id){
+        System.out.println("Tentative de jeu case "+id);
         if (plateau.getDamier()[id].jouable())
             if((plateau.tourBlanc()&& iablanc != null) || (!plateau.tourBlanc()&& ianoir != null))
                 plateau.jouer(id);
