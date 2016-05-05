@@ -85,8 +85,10 @@ public class TableauCase{
     /**
      * Remplace le contenu du tableau de case par un nouveau passé en argument.
      * 
+     * <p>À n'utiliser que si vous savez ce que vous faites</p>
+     * 
      * @param tab nouveau tableau de cases contenu par le TableauCase
-     * @warning À n'utiliser que si vous savez ce que vous faites
+     * 
      */
     public void setTab(CaseR[] tab){
         this.tab = tab;

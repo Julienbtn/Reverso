@@ -4,9 +4,17 @@ package ihm.gui;
 import java.awt.*;
 import javax.swing.JPanel;
 
+/**
+ * Représentation graphique d'un pion de Reverso
+ * 
+ */
 public class Pion extends JPanel {
 
-    // Constructeur d'un pion avec sa couleur placée en paramètre
+    
+    /**
+     * Construction du pion avec sa couleur passée en argument
+     * @param couleur 
+     */
     public Pion(Couleur couleur) {
         setOpaque(false);
         switch (couleur) {
@@ -22,6 +30,9 @@ public class Pion extends JPanel {
     }
     
     // Méthode qui permet de dessiner le pion 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void paintComponent(Graphics g){
         Paint paint;
