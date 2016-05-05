@@ -94,7 +94,15 @@ public class IntelligenceDiff extends IntelligenceBase {
     
     
     
-    
+    /**
+     * Indique le meilleur coup de l'ia et son score après ce coup.
+     * 
+     * @param prof Nombre de coups restant à anticiper
+     * @param plate Plateau à partir duquel il faut 
+     * @return Tableau contenant l'indice de la meilleure case à jouer pour 
+     * l'ia et son score final.
+     * @throws NoFreeCaseException si aucune case n'est jouable sur le plateau passé.
+     */
     private int[] meilleurIa(int prof, Plateau plate) throws NoFreeCaseException{
         // System.out.println("Inoir " + prof);
         ArrayList<Integer> cases = casesJouables(plate);
@@ -133,10 +141,11 @@ public class IntelligenceDiff extends IntelligenceBase {
     
     
     
-    
-    
-    
-    
+
+    /**
+     * {@inheritDoc}
+     * 
+     */
     @Override
     public int mouvement() throws NoFreeCaseException {
         return meilleurIa(profRec, plateau)[0];

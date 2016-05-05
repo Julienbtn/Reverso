@@ -1,23 +1,47 @@
 package jeu;
 
+/**
+ *
+ * @author Podoko
+ */
 public interface Plateau {
     // Renvoie copie du plateau
-    public Plateau copie();
+
+    /**
+     *
+     * @return
+     */
+        public Plateau copie();
     
      // Tableau contenant les cases du tableau (ligne par ligne)
-    public Case[] getDamier();
+
+    /**
+     *
+     * @return
+     */
+        public Case[] getDamier();
     
     // Tente de jouer à la case indiquée, lance une exception si impossible
     public void jouer(int idCase);
 
     // Retourne true si c'est au joueur blanc de jouer
-    public boolean tourBlanc();
+
+    /**
+     *
+     * @return
+     */
+        public boolean tourBlanc();
     
     // Retourne true si un joueur vient de passer son tour
     public boolean passe();
     
     // Retourne le score actuel des blancs
-    public int scoreBlanc();
+
+    /**
+     *
+     * @return
+     */
+        public int scoreBlanc();
     
     // Retourne le score actuel des noirs
     public int scoreNoir();
@@ -26,8 +50,18 @@ public interface Plateau {
     public boolean victoireBlanc();
     
     // Renvoie true si jeu terminé
-    public boolean termine();
+
+    /**
+     *
+     * @return
+     */
+        public boolean termine();
     
     // Renvoie le nombre de cases vides
-    public int nbCasesLibres();
+
+    /**
+     *
+     * @return
+     */
+        public int nbCasesLibres();
 }

@@ -6,17 +6,42 @@ import java.util.Random;
 import jeu.Case;
 import jeu.Plateau;
 
+
+/**
+ * Intelligence artificielle par valuation de cases.
+ * 
+ * <p>Cette intelligence associe une valeur à chaque case du plateau et propose
+ * un coup de façon à obtenir le meilleur nombre de points.</p>
+ * 
+ * @see IntelligenceBase
+ */
 public class IntelligenceValuation extends IntelligenceBase{
     // Grille de valeur des cases
+    /**
+     * Tableau des valeurs associées à chacune des cases
+    */
     private int[] valeurs;
     
+    /**
+    * Initialise l'intelligence atificielle et crée le tableau des valeurs associées
+    * aux cases
+    * 
+    * @param plate le Plateau pour lequel l'intelligence artificielle va 
+    * chercher les coups possibles.
+    */
     public IntelligenceValuation(Plateau plate) {
         super(plate);
         valeurs = creerGrille();
     }
     
     // Constructeur de la grille
-    public int[] creerGrille(){
+    /**
+     * Crée et renvoie un tableau contenant la liste des valeurs associées à chaque 
+     * case.
+     * 
+     * @return le tableau des valeurs
+     */
+    public static int[] creerGrille(){
         int[] grille = new int[64];
         // On crée un patron correspondant au coin supérieur gauche
         int[] patron = new int[16];
@@ -46,9 +71,16 @@ public class IntelligenceValuation extends IntelligenceBase{
         return grille;
     }
     
+    /**
+     * 
+     * @param plate Plateau du jeu sur lequel on veut compter les points
+     * @param blanc Booleen indiquant si le joueur dont on veut compter les points.
+     * true signifie qu'on veut compter les points blanc, false les noirs
+     * @return Nombre total de points du joueur indiqué.
+     */
     // Calcul les points qu'à l'IA en utilisant la grille
     // Si il y a 4 cases libres ou moints, on calcule le nombre de pions
-    public int calculerPoints(Plateau plate,boolean blanc){
+    protected int calculerPoints(Plateau plate,boolean blanc){
         int score = 0;
         // Si le joueur possède un angle les cases autour sont avantageuses
         boolean hautgauche,hautdroit,basgauche,basdroit;
@@ -79,11 +111,22 @@ public class IntelligenceValuation extends IntelligenceBase{
     }
     
     // Renvoie vrai si le joueur possède la case
-    public boolean possedeCase(Case c, boolean joueur){
+    /**
+     * 
+     * @param c Case à étudier
+     * @param joueur joueur supposé posseder la case. true signifie joueur blanc, 
+     * false joueur noir
+     * @return true si le joueur indiqué possede effectivement la case.
+     */
+    protected boolean possedeCase(Case c, boolean joueur){
         return c.remplie() && c.blanche()==joueur;
     }
         
     // L'ia renvoie la case sur laquelle elle va jouer
+    /**
+     * {@inheritDoc}
+     * 
+     */
     @Override
     public int mouvement() throws NoFreeCaseException {
         Random rnd  = new Random();

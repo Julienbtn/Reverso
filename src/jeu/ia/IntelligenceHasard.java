@@ -15,6 +15,7 @@ public class IntelligenceHasard extends IntelligenceBase{
 
     /**
      * {@inheritDoc}
+     * @param plate
      */
     public IntelligenceHasard(Plateau plate) {
         super(plate);

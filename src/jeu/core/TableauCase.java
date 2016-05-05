@@ -1,5 +1,9 @@
 package jeu.core;
 
+/**
+ *
+ * @author Podoko
+ */
 public class TableauCase{
     private int dimX;
     private int dimY;
@@ -22,6 +26,10 @@ public class TableauCase{
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public int getDimY() {
         return dimY;
     }
@@ -36,6 +44,11 @@ public class TableauCase{
     public CaseR getCase(int[] choix){
         return tab[choix[1]*this.dimX + choix[0]];
     }
+
+    /**
+     *
+     * @param tab
+     */
     public void setTab(CaseR[] tab){
         this.tab = tab;
     }
@@ -283,7 +296,12 @@ public class TableauCase{
     }
     
     // Renvoie true si au moins une case du plateau est jouable
-    public boolean caseJouable(){
+
+    /**
+     *
+     * @return
+     */
+        public boolean caseJouable(){
         for (int x =0; x<dimX;x++)
             for (int y =0; y<dimX;y++)
                 if(getCase(x,y).isJouable())
@@ -294,7 +312,13 @@ public class TableauCase{
     // Compte les points en fin de partie.
     // Si des cases sont vides, elles appartiennent au dernier joueur 
     // qui a posé un pion (true pour blanc, false pour noir)
-    public int comptePoints(boolean joueur){
+
+    /**
+     *
+     * @param joueur
+     * @return
+     */
+        public int comptePoints(boolean joueur){
         int c = 0;
         for (int x =0; x<dimX;x++)
             for (int y =0; y<dimX;y++)
@@ -321,7 +345,12 @@ public class TableauCase{
     }
     
     // Compte les cases vides (comme le nom l'indique)
-    public int compteCasesVides(){
+
+    /**
+     *
+     * @return
+     */
+        public int compteCasesVides(){
         int ret = 0;
         for(int i=0;i<63;i++)
             if(tab[i].isVide())

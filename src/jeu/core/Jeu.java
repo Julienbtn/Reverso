@@ -2,6 +2,10 @@ package jeu.core;
 
 import jeu.Plateau;
 
+/**
+ *
+ * @author Podoko
+ */
 public class Jeu implements Plateau{
     private TableauCase plateau;
     private boolean tourBlanc;
@@ -12,7 +16,11 @@ public class Jeu implements Plateau{
   
     
     // Constructeur de base, crée un plateau déjà prêt
-    public Jeu(){
+
+    /**
+     *
+     */
+        public Jeu(){
         plateau = new TableauCase(8,8);
         tourBlanc = false;
         passe = false;
@@ -21,19 +29,35 @@ public class Jeu implements Plateau{
     }
     
     // Constructeur utilisé pour copier le jeu (voir fonction copie)
-    public Jeu(boolean tourBlanc, boolean passe, boolean fini){
+
+    /**
+     *
+     * @param tourBlanc
+     * @param passe
+     * @param fini
+     */
+        public Jeu(boolean tourBlanc, boolean passe, boolean fini){
         plateau = new TableauCase(8,8);
         this.tourBlanc = tourBlanc;
         this.passe = passe;
         this.fini = fini;
     }
     
+    /**
+     *
+     * @return
+     */
     public TableauCase getPlateau(){
         return plateau;
     }
     
     // Pause un pion aux coordonnées [colonne,ligne]
-    public void jouer(int[] choix){
+
+    /**
+     *
+     * @param choix
+     */
+        public void jouer(int[] choix){
         plateau.jouer(choix, tourBlanc);
         tourBlanc = !tourBlanc;
         passe = false;
@@ -45,7 +69,12 @@ public class Jeu implements Plateau{
     
     //      Implémentation interface IA !
     // Copie le jeu actuel
-    @Override
+
+    /**
+     *
+     * @return
+     */
+        @Override
     public Jeu copie(){
         Jeu copie;
         copie = new Jeu(tourBlanc, passe, fini);
@@ -86,22 +115,47 @@ public class Jeu implements Plateau{
             }
         }
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean tourBlanc(){
         return tourBlanc;
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean passe(){
         return passe;
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public int scoreBlanc(){
         return plateau.comptePoints(true);
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public int scoreNoir(){
         return plateau.comptePoints(false);
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean victoireBlanc(){
         if (termine())
@@ -113,6 +167,11 @@ public class Jeu implements Plateau{
     public boolean termine(){
         return fini;
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public int nbCasesLibres(){
         return plateau.compteCasesVides();

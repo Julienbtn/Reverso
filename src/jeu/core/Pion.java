@@ -8,6 +8,10 @@ public class Pion {
         this.blanc = blanc;
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean isBlanc(){
         return blanc;
     }
