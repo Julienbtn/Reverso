@@ -144,7 +144,6 @@ public class IntelligenceDiff extends IntelligenceBase {
 
     /**
      * {@inheritDoc}
-     * 
      */
     @Override
     public int mouvement() throws NoFreeCaseException {

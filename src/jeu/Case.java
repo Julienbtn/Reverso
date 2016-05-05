@@ -1,33 +1,29 @@
 package jeu;
 
 /**
- *
- * @author Podoko
+ * Interface des cases pour le plateau Reverso
+ * 
  */
 public interface Case {
     
     // Indique si la case est prise par un joueur
-
     /**
      *
-     * @return
+     * @return true si un pion se trouve dans la case
      */
-        public boolean remplie();
+    public boolean remplie();
     
     // Si la case est remplie, indique si c'est par le joueur blanc
-    //   (second joueur), sinon lève une exception
-
     /**
      *
-     * @return
+     * @return true si la case est occupée par un pion blanc
      */
-        public boolean blanche();
+    public boolean blanche();
     
     // Indique s'il est possible de jouer sur cette case
-
     /**
      *
-     * @return
+     * @return true s'il est possible de jouer sur la case
      */
-        public boolean jouable();
+    public boolean jouable();
 }

@@ -3,24 +3,35 @@ package jeu.core;
 import jeu.Plateau;
 
 /**
- *
- * @author Podoko
+ * jeu de reverso implémentant l'interface Plateau
+ * 
+ * @see Plateau
  */
 public class Jeu implements Plateau{
+    /**
+     * Demier du jeu contenant les cases et les pions sur chacune d'elle, coeur du jeu
+     */
     private TableauCase plateau;
+    /**
+     * Indique s'il est au tour du blanc de jouer
+     */
     private boolean tourBlanc;
     
     // Implémentation interface IA !
+    /**
+     * Indique si le dernier joueur vient de passer son tour
+     */
     private boolean passe;
+    /**
+     * Indique si la partie est terminée
+     */
     private boolean fini;
   
     
-    // Constructeur de base, crée un plateau déjà prêt
-
     /**
-     *
+     * Constructeur de base, crée un plateau déjà prêt, quatre cases occupées au mileu
      */
-        public Jeu(){
+    public Jeu(){
         plateau = new TableauCase(8,8);
         tourBlanc = false;
         passe = false;
@@ -28,15 +39,15 @@ public class Jeu implements Plateau{
         plateau.chercherCase(tourBlanc);
     }
     
-    // Constructeur utilisé pour copier le jeu (voir fonction copie)
-
+    
     /**
-     *
-     * @param tourBlanc
-     * @param passe
-     * @param fini
+     * Constructeur utilisé pour copier le jeu (voir fonction copie)
+     * 
+     * @param tourBlanc indique si le tour doit être au blanc ou non
+     * @param passe indique si le dernier joueur est supposé avoir passé
+     * @param fini indique si la partie est déjà terminée
      */
-        public Jeu(boolean tourBlanc, boolean passe, boolean fini){
+    public Jeu(boolean tourBlanc, boolean passe, boolean fini){
         plateau = new TableauCase(8,8);
         this.tourBlanc = tourBlanc;
         this.passe = passe;
@@ -44,50 +55,63 @@ public class Jeu implements Plateau{
     }
     
     /**
-     *
-     * @return
+     * Permet d'obternir directement le damier utilisé par le jeu et son contenu
+     * 
+     * @return le plateau utilisé par le jeu
      */
     public TableauCase getPlateau(){
         return plateau;
     }
     
-    // Pause un pion aux coordonnées [colonne,ligne]
-
     /**
-     *
-     * @param choix
+     * Pause un pion aux coordonnées [colonne,ligne] retourne les cases à retourner
+     * et met à jour les infos sur le jeu.
+     * 
+     * @param choix coordonnées (colonne, ligne) de la case à jouer.
      */
-        public void jouer(int[] choix){
+    public void jouer(int[] choix){
         plateau.jouer(choix, tourBlanc);
         tourBlanc = !tourBlanc;
         passe = false;
     }
     
+    /**
+     * Indique si une case au moins est jouable par le joueur actuel
+     * 
+     * @return true si une case est jouable, false sinon
+     */
     public boolean caseJouable(){
         return plateau.caseJouable();
     }
     
+    
+    
     //      Implémentation interface IA !
-    // Copie le jeu actuel
-
+    
     /**
-     *
-     * @return
+     * {@inheritDoc}
      */
-        @Override
+    @Override
     public Jeu copie(){
         Jeu copie;
         copie = new Jeu(tourBlanc, passe, fini);
         copie.plateau = plateau.copieTout();
         return copie;
     }
-    // Renvoie UNE COPIE du damier seulement
+    
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CaseR[] getDamier(){
         return plateau.copieTab();
     }
-    // Joue dans une case et gère le tour qui passe/la fin du jeu
-    // Fonction également utilisée pour les coups du joueur
+    
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void jouer(int idCase){
         if (idCase<0 ||idCase>=64)
@@ -117,17 +141,15 @@ public class Jeu implements Plateau{
     }
 
     /**
-     *
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public boolean tourBlanc(){
         return tourBlanc;
     }
-
+    
     /**
-     *
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public boolean passe(){
@@ -135,8 +157,7 @@ public class Jeu implements Plateau{
     }
 
     /**
-     *
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public int scoreBlanc(){
@@ -144,8 +165,7 @@ public class Jeu implements Plateau{
     }
 
     /**
-     *
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public int scoreNoir(){
@@ -153,8 +173,7 @@ public class Jeu implements Plateau{
     }
 
     /**
-     *
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public boolean victoireBlanc(){
@@ -163,14 +182,17 @@ public class Jeu implements Plateau{
                 return true;
         return false;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean termine(){
         return fini;
     }
 
     /**
-     *
-     * @return
+     * {@inheritDoc}
      */
     @Override
     public int nbCasesLibres(){
