@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="jeu.ia">
+  <ClassDiagramComponents>
+    <Class name="IntelligenceBase" package="jeu.ia" visibility="public" isAbstract="true" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="plateau" type="Plateau" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="casesJouables" returnType="ArrayList&lt;Integer&gt;" visibility="protected"/>
+        <Method name="casesJouables" returnType="ArrayList&lt;Integer&gt;" visibility="protected">
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="scoreIa" returnType="int" visibility="protected">
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="scoreJo" returnType="int" visibility="protected">
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="tourIa" returnType="boolean" visibility="protected">
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="simuler" returnType="Plateau" visibility="protected">
+          <Argument type="Plateau" name="source"/>
+          <Argument type="int" name="coup"/>
+        </Method>
+        <Method name="mouvement" returnType="int" visibility="public" isAbstract="true"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceDiff" package="jeu.ia" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="profRec" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="i"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="meilleurJo" returnType="int[]" visibility="private">
+          <Argument type="int" name="prof"/>
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="meilleurIa" returnType="int[]" visibility="private">
+          <Argument type="int" name="prof"/>
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceFusion" package="jeu.ia" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="iaVal" type="IntelligenceValuationRecursive" visibility="private"/>
+        <Field name="iaMinMax" type="IntelligenceMinMax" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceHasard" package="jeu.ia" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceMinMax" package="jeu.ia" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="prof" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="profondeur"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+        <Method name="iaMin" returnType="int" visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Method>
+        <Method name="iaMax" returnType="int" visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceValuation" package="jeu.ia" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="valeurs" type="int[]" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="creerGrille" returnType="int[]" visibility="public" isStatic="true"/>
+        <Method name="calculerPoints" returnType="int" visibility="protected">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="boolean" name="blanc"/>
+        </Method>
+        <Method name="possedeCase" returnType="boolean" visibility="protected">
+          <Argument type="Case" name="c"/>
+          <Argument type="boolean" name="joueur"/>
+        </Method>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceValuationRecursive" package="jeu.ia" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="prof" type="int" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+        <Method name="iaMin" returnType="int" visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Method>
+        <Method name="iaMax" returnType="int" visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NoFreeCaseException" package="jeu.ia" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="message"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="message"/>
+          <Argument type="Throwable" name="cause"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="Throwable" name="cause"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="jeu.ia.IntelligenceHasard" target="jeu.ia.IntelligenceBase"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceValuationRecursive" target="jeu.ia.IntelligenceValuation"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceValuation" target="jeu.ia.IntelligenceBase"/>
+    <HasRelation name="iaMinMax" source="jeu.ia.IntelligenceFusion" target="jeu.ia.IntelligenceMinMax" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="iaVal" source="jeu.ia.IntelligenceFusion" target="jeu.ia.IntelligenceValuationRecursive" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceMinMax" target="jeu.ia.IntelligenceBase"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceFusion" target="jeu.ia.IntelligenceBase"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceDiff" target="jeu.ia.IntelligenceBase"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

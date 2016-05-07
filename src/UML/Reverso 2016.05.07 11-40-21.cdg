@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Reverso">
+  <ClassDiagramComponents>
+    <Class name="CaseG" package="ihm.gui" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Case" name="c"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="update" returnType="void" visibility="public">
+          <Argument type="Case" name="c"/>
+          <Argument type="boolean" name="blanc"/>
+          <Argument type="boolean" name="ia"/>
+        </Method>
+        <Method name="getCase" returnType="CaseG" visibility="public">
+          <Argument type="int" name="i"/>
+          <Argument type="int" name="j"/>
+        </Method>
+        <Method name="getCase" returnType="CaseG" visibility="public">
+          <Argument type="int" name="i"/>
+        </Method>
+        <Method name="initCouleur" returnType="void" visibility="private"/>
+        <Method name="creerPion" returnType="Pion" visibility="private">
+          <Argument type="Couleur" name="couleur"/>
+        </Method>
+        <Method name="paintComponent" returnType="void" visibility="public">
+          <Argument type="Graphics" name="g"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Enum name="Couleur" package="ihm.gui" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Literals>
+        <Literal name="BLANC"/>
+        <Literal name="NOIR"/>
+      </Literals>
+    </Enum>
+    <Class name="Fenetre" package="ihm.gui" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="container_nord" type="JPanel" visibility="private" isFinal="true"/>
+        <Field name="container_centre" type="JPanel" visibility="private" isFinal="true"/>
+        <Field name="container_sud" type="JPanel" visibility="private" isFinal="true"/>
+        <Field name="victoire" type="JFrame" visibility="private"/>
+        <Field name="plateau" type="Plateau" visibility="private"/>
+        <Field name="score" type="int[]" visibility="private" isFinal="true"/>
+        <Field name="iablanc" type="IntelligenceBase" visibility="private"/>
+        <Field name="ianoir" type="IntelligenceBase" visibility="private"/>
+        <Field name="timer" type="Timer" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plateau"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="barremenu" returnType="void" visibility="private"/>
+        <Method name="choixMenu" returnType="IntelligenceBase" visibility="private">
+          <Argument type="int" name="choix"/>
+        </Method>
+        <Method name="getChoix" returnType="int" visibility="private">
+          <Argument type="String" name="str"/>
+          <Argument type="String[]" name="tab"/>
+        </Method>
+        <Method name="clicCase" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="actualiser" returnType="void" visibility="public"/>
+        <Method name="scorefin" returnType="String" visibility="private"/>
+        <Method name="joueria" returnType="void" visibility="private">
+          <Argument type="boolean" name="blanc"/>
+        </Method>
+        <Method name="jouerpouria" returnType="void" visibility="private">
+          <Argument type="int" name="id"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ListenerCase" package="ihm.gui" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private" isFinal="true"/>
+        <Field name="fenetre" type="Fenetre" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="Fenetre" name="f"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouseClicked" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="arg0"/>
+        </Method>
+        <Method name="mouseEntered" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="arg0"/>
+        </Method>
+        <Method name="mouseExited" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="arg0"/>
+        </Method>
+        <Method name="mousePressed" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="arg0"/>
+        </Method>
+        <Method name="mouseReleased" returnType="void" visibility="public">
+          <Argument type="MouseEvent" name="arg0"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Pion" package="ihm.gui" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Couleur" name="couleur"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="paintComponent" returnType="void" visibility="public">
+          <Argument type="Graphics" name="g"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="Case" package="jeu" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Methods>
+        <Method name="remplie" returnType="boolean" visibility="public"/>
+        <Method name="blanche" returnType="boolean" visibility="public"/>
+        <Method name="jouable" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Class name="CaseR" package="jeu.core" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="jouable" type="boolean" visibility="private"/>
+        <Field name="contenu" type="Pion" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="boolean" name="blanc"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="setJouable" returnType="void" visibility="public">
+          <Argument type="boolean" name="jouable"/>
+        </Method>
+        <Method name="isJouable" returnType="boolean" visibility="public"/>
+        <Method name="isVide" returnType="boolean" visibility="public"/>
+        <Method name="isBlanc" returnType="boolean" visibility="public"/>
+        <Method name="isNoir" returnType="boolean" visibility="public"/>
+        <Method name="isBool" returnType="boolean" visibility="public">
+          <Argument type="boolean" name="joueur"/>
+        </Method>
+        <Method name="jouer" returnType="void" visibility="public">
+          <Argument type="boolean" name="blanc"/>
+        </Method>
+        <Method name="copieCase" returnType="CaseR" visibility="public"/>
+        <Method name="remplie" returnType="boolean" visibility="public"/>
+        <Method name="blanche" returnType="boolean" visibility="public"/>
+        <Method name="jouable" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Jeu" package="jeu.core" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="plateau" type="TableauCase" visibility="private"/>
+        <Field name="tourBlanc" type="boolean" visibility="private"/>
+        <Field name="passe" type="boolean" visibility="private"/>
+        <Field name="fini" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="boolean" name="tourBlanc"/>
+          <Argument type="boolean" name="passe"/>
+          <Argument type="boolean" name="fini"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getPlateau" returnType="TableauCase" visibility="public"/>
+        <Method name="jouer" returnType="void" visibility="public">
+          <Argument type="int[]" name="choix"/>
+        </Method>
+        <Method name="caseJouable" returnType="boolean" visibility="public"/>
+        <Method name="copie" returnType="Jeu" visibility="public"/>
+        <Method name="getDamier" returnType="CaseR[]" visibility="public"/>
+        <Method name="jouer" returnType="void" visibility="public">
+          <Argument type="int" name="idCase"/>
+        </Method>
+        <Method name="tourBlanc" returnType="boolean" visibility="public"/>
+        <Method name="passe" returnType="boolean" visibility="public"/>
+        <Method name="scoreBlanc" returnType="int" visibility="public"/>
+        <Method name="scoreNoir" returnType="int" visibility="public"/>
+        <Method name="victoireBlanc" returnType="boolean" visibility="public"/>
+        <Method name="termine" returnType="boolean" visibility="public"/>
+        <Method name="nbCasesLibres" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Pion" package="jeu.core" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Fields>
+        <Field name="blanc" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="boolean" name="blanc"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="isBlanc" returnType="boolean" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="TableauCase" package="jeu.core" visibility="public" xPosition="320.0" yPosition="420.0">
+      <Fields>
+        <Field name="nombreColonnes" type="int" visibility="private" isFinal="true"/>
+        <Field name="nombreLignes" type="int" visibility="private" isFinal="true"/>
+        <Field name="tab" type="CaseR[]" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="dimY"/>
+          <Argument type="int" name="dimX"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getNombreLignes" returnType="int" visibility="public"/>
+        <Method name="getNombreColonnes" returnType="int" visibility="public"/>
+        <Method name="getCase" returnType="CaseR" visibility="public">
+          <Argument type="int" name="colonne"/>
+          <Argument type="int" name="ligne"/>
+        </Method>
+        <Method name="getCase" returnType="CaseR" visibility="public">
+          <Argument type="int[]" name="choix"/>
+        </Method>
+        <Method name="setTab" returnType="void" visibility="public">
+          <Argument type="CaseR[]" name="tab"/>
+        </Method>
+        <Method name="chercherCase" returnType="boolean" visibility="public">
+          <Argument type="boolean" name="joueur"/>
+        </Method>
+        <Method name="nonVide" returnType="boolean" visibility="public">
+          <Argument type="int" name="colonne"/>
+          <Argument type="int" name="ligne"/>
+        </Method>
+        <Method name="peutJouer" returnType="boolean" visibility="public">
+          <Argument type="int" name="colonne"/>
+          <Argument type="int" name="ligne"/>
+          <Argument type="boolean" name="joueur"/>
+        </Method>
+        <Method name="jouer" returnType="void" visibility="public">
+          <Argument type="int[]" name="choix"/>
+          <Argument type="boolean" name="joueur"/>
+        </Method>
+        <Method name="caseJouable" returnType="boolean" visibility="public"/>
+        <Method name="comptePoints" returnType="int" visibility="public">
+          <Argument type="boolean" name="joueur"/>
+        </Method>
+        <Method name="copieTab" returnType="CaseR[]" visibility="public"/>
+        <Method name="copieTout" returnType="TableauCase" visibility="public"/>
+        <Method name="compteCasesVides" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceBase" package="jeu.ia" visibility="public" isAbstract="true" xPosition="620.0" yPosition="420.0">
+      <Fields>
+        <Field name="plateau" type="Plateau" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="casesJouables" returnType="ArrayList&lt;Integer&gt;" visibility="protected"/>
+        <Method name="casesJouables" returnType="ArrayList&lt;Integer&gt;" visibility="protected">
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="scoreIa" returnType="int" visibility="protected">
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="scoreJo" returnType="int" visibility="protected">
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="tourIa" returnType="boolean" visibility="protected">
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="simuler" returnType="Plateau" visibility="protected">
+          <Argument type="Plateau" name="source"/>
+          <Argument type="int" name="coup"/>
+        </Method>
+        <Method name="mouvement" returnType="int" visibility="public" isAbstract="true"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceDiff" package="jeu.ia" visibility="public" xPosition="920.0" yPosition="420.0">
+      <Fields>
+        <Field name="profRec" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="i"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="meilleurJo" returnType="int[]" visibility="private">
+          <Argument type="int" name="prof"/>
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="meilleurIa" returnType="int[]" visibility="private">
+          <Argument type="int" name="prof"/>
+          <Argument type="Plateau" name="plate"/>
+        </Method>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceFusion" package="jeu.ia" visibility="public" xPosition="1220.0" yPosition="420.0">
+      <Fields>
+        <Field name="iaVal" type="IntelligenceValuationRecursive" visibility="private"/>
+        <Field name="iaMinMax" type="IntelligenceMinMax" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceHasard" package="jeu.ia" visibility="public" xPosition="1520.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceMinMax" package="jeu.ia" visibility="public" xPosition="1820.0" yPosition="420.0">
+      <Fields>
+        <Field name="prof" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="profondeur"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+        <Method name="iaMin" returnType="int" visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Method>
+        <Method name="iaMax" returnType="int" visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceValuation" package="jeu.ia" visibility="public" xPosition="2120.0" yPosition="420.0">
+      <Fields>
+        <Field name="valeurs" type="int[]" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="creerGrille" returnType="int[]" visibility="public" isStatic="true"/>
+        <Method name="calculerPoints" returnType="int" visibility="protected">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="boolean" name="blanc"/>
+        </Method>
+        <Method name="possedeCase" returnType="boolean" visibility="protected">
+          <Argument type="Case" name="c"/>
+          <Argument type="boolean" name="joueur"/>
+        </Method>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="IntelligenceValuationRecursive" package="jeu.ia" visibility="public" xPosition="20.0" yPosition="820.0">
+      <Fields>
+        <Field name="prof" type="int" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mouvement" returnType="int" visibility="public"/>
+        <Method name="iaMin" returnType="int" visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Method>
+        <Method name="iaMax" returnType="int" visibility="public">
+          <Argument type="Plateau" name="plate"/>
+          <Argument type="int" name="prof"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="NoFreeCaseException" package="jeu.ia" visibility="public" xPosition="320.0" yPosition="820.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="message"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="message"/>
+          <Argument type="Throwable" name="cause"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="Throwable" name="cause"/>
+        </Constructor>
+      </Constructors>
+      <Methods/>
+    </Class>
+    <Interface name="Plateau" package="jeu" visibility="public" xPosition="620.0" yPosition="820.0">
+      <Methods>
+        <Method name="copie" returnType="Plateau" visibility="public"/>
+        <Method name="getDamier" returnType="Case[]" visibility="public"/>
+        <Method name="jouer" returnType="void" visibility="public">
+          <Argument type="int" name="idCase"/>
+        </Method>
+        <Method name="tourBlanc" returnType="boolean" visibility="public"/>
+        <Method name="passe" returnType="boolean" visibility="public"/>
+        <Method name="scoreBlanc" returnType="int" visibility="public"/>
+        <Method name="scoreNoir" returnType="int" visibility="public"/>
+        <Method name="victoireBlanc" returnType="boolean" visibility="public"/>
+        <Method name="termine" returnType="boolean" visibility="public"/>
+        <Method name="nbCasesLibres" returnType="int" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Class name="Reverso" package="reverso" visibility="public" xPosition="920.0" yPosition="820.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="ianoir" source="ihm.gui.Fenetre" target="jeu.ia.IntelligenceBase" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="jeu.ia.IntelligenceDiff" target="jeu.Plateau" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="plateau" source="jeu.ia.IntelligenceBase" target="jeu.Plateau" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="jeu.core.Jeu" target="jeu.core.TableauCase" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="contenu" source="jeu.core.CaseR" target="jeu.core.Pion" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="plateau" source="ihm.gui.Fenetre" target="jeu.Plateau" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="iaMinMax" source="jeu.ia.IntelligenceFusion" target="jeu.ia.IntelligenceMinMax" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="jeu.ia.IntelligenceValuation" target="jeu.Case" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="plateau" source="jeu.core.Jeu" target="jeu.core.TableauCase" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceMinMax" target="jeu.ia.IntelligenceBase"/>
+    <UseRelation source="ihm.gui.CaseG" target="jeu.core.Pion" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="jeu.ia.IntelligenceValuation" target="jeu.Plateau" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="jeu.core.CaseR" target="jeu.core.CaseR" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceFusion" target="jeu.ia.IntelligenceBase"/>
+    <UseRelation source="jeu.Plateau" target="jeu.Plateau" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="jeu.ia.IntelligenceValuationRecursive" target="jeu.Plateau" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceValuationRecursive" target="jeu.ia.IntelligenceValuation"/>
+    <UseRelation source="jeu.Plateau" target="jeu.Case" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="iablanc" source="ihm.gui.Fenetre" target="jeu.ia.IntelligenceBase" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ihm.gui.Fenetre" target="jeu.ia.IntelligenceBase" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ihm.gui.CaseG" target="jeu.Case" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="jeu.core.Jeu" target="jeu.Plateau"/>
+    <HasRelation name="fenetre" source="ihm.gui.ListenerCase" target="ihm.gui.Fenetre" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="iaVal" source="jeu.ia.IntelligenceFusion" target="jeu.ia.IntelligenceValuationRecursive" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="jeu.core.CaseR" target="jeu.Case"/>
+    <UseRelation source="jeu.core.TableauCase" target="jeu.core.TableauCase" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="jeu.ia.IntelligenceMinMax" target="jeu.Plateau" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceHasard" target="jeu.ia.IntelligenceBase"/>
+    <UseRelation source="jeu.core.TableauCase" target="jeu.core.CaseR" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="jeu.ia.IntelligenceBase" target="jeu.Plateau" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="jeu.core.Jeu" target="jeu.core.CaseR" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceDiff" target="jeu.ia.IntelligenceBase"/>
+    <UseRelation source="jeu.core.Jeu" target="jeu.core.Jeu" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="jeu.ia.IntelligenceValuation" target="jeu.ia.IntelligenceBase"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

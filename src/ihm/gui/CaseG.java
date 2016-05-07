@@ -7,7 +7,7 @@ import jeu.Case;
 
 public class CaseG extends JPanel {
     
-    // Construction qui transforme une case du jeu en case graphique
+    // Constructeur qui transforme une case du jeu en case graphique
     public CaseG(Case c){
         setLayout(new GridLayout(1,0));
         initCouleur();
