@@ -46,7 +46,7 @@ public class IntelligenceMinMax extends IntelligenceBase{
         ArrayList<Integer> jouables= casesJouables();
         for(int i=0;i<jouables.size();i++){
             copie =simuler(plateau, jouables.get(i));
-            val=iaMin(copie,prof);
+            val = copie.passe()?iaMax(copie,prof):iaMin(copie,prof);
             if(val==maxval)
                 positionsMeilleurCoup.add(jouables.get(i));
             else if(val>maxval){
@@ -75,7 +75,7 @@ public class IntelligenceMinMax extends IntelligenceBase{
         ArrayList<Integer> jouables= casesJouables(plate);
         for(int i=0;i<jouables.size();i++){
             copie =simuler(plate, jouables.get(i));
-            val=iaMax(copie,prof-1);
+            val = copie.passe()?iaMin(copie,prof-1):iaMax(copie,prof-1);
             if(val<minval)
                 minval=val;
         }
@@ -99,7 +99,7 @@ public class IntelligenceMinMax extends IntelligenceBase{
         ArrayList<Integer> jouables= casesJouables(plate);
         for(int i=0;i<jouables.size();i++){
             copie =simuler(plate, jouables.get(i));
-            val=iaMin(copie,prof-1);
+            val = copie.passe()?iaMax(copie,prof-1):iaMin(copie,prof-1);
             if(val>maxval)
                 maxval=val;
         }

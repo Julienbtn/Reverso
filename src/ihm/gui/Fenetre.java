@@ -123,7 +123,7 @@ public class Fenetre extends JFrame{
      */
     private void barremenu(){
 
-        String[] choix = {"Joueur","Aléatoire","Axel(?)","Valuation","MinMax",
+        String[] choix = {"Joueur","Aléatoire","Valuation","MinMax",
             "Fusion","ValuationRecursive"};
         JButton valider = new JButton("Jouer");
         JComboBox blanc = new JComboBox(choix);
@@ -166,11 +166,10 @@ public class Fenetre extends JFrame{
         switch(choix){
             case 1: return null;
             case 2: return new IntelligenceHasard(plateau);
-            case 3: return new IntelligenceDiff(plateau);
-            case 4: return new IntelligenceValuation(plateau);
-            case 5: return new IntelligenceMinMax(plateau,4);
-            case 6: return new IntelligenceFusion(plateau,3);
-            case 7: return new IntelligenceValuationRecursive(plateau,3);
+            case 3: return new IntelligenceValuation(plateau);
+            case 4: return new IntelligenceMinMax(plateau,4);
+            case 5: return new IntelligenceFusion(plateau,3);
+            case 6: return new IntelligenceValuationRecursive(plateau,3);
             default: System.out.println("Erreur choix ia");return null;
         }
     }
